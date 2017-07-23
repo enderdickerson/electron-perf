@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { MenuModule } from './menu/menu.module';
+import { SiteNavModule } from './sitenav/sitenav.module';
 import { PagesModule } from './pages/pages.module';
 import { TestModule } from './test/test.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -14,9 +15,10 @@ import { TestModule } from './test/test.module';
   imports: [
     BrowserModule,
     DashboardModule,
-    MenuModule,
+    SiteNavModule,
     PagesModule,
-    TestModule
+    TestModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

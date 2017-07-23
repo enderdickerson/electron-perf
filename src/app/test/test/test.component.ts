@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
 })
 
 export class TestComponent {
-
+  onRun(url) {
+    console.log('Run this url test: ' + url);
+  }
 }

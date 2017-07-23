@@ -4,14 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from "@angular/http";
 import { CommonModule } from '@angular/common';
 
-import { pagesRouting } from './pages.routing';
 import { PagesComponent } from './pages/pages.component';
+import { PagesRoutingModule } from './pages-routing.module';
 
 @NgModule({
     imports: [
       FormsModule,
       HttpModule,
-      CommonModule
+      CommonModule,
+      PagesRoutingModule
     ],
     exports: [
       PagesComponent

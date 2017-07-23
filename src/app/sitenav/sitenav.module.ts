@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { TabMenuModule, MenuItem } from 'primeng/primeng';
 
 // Custom imports
-import { MenuContainer } from './menu/menu.component';
+import { SiteNavComponent } from './sitenav/sitenav.component';
 
 @NgModule({
     imports: [
@@ -17,13 +17,13 @@ import { MenuContainer } from './menu/menu.component';
       TabMenuModule
     ],
     exports: [
-      MenuContainer
+      SiteNavComponent
     ],
     declarations: [
-      MenuContainer,
+      SiteNavComponent,
     ],
     providers: [
     ],
 })
 
-export class MenuModule { }
+export class SiteNavModule { }

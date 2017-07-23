@@ -3,17 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 
 @Component({
-  selector: 'menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'sitenav',
+  templateUrl: './sitenav.component.html',
+  styleUrls: ['./sitenav.component.css']
 })
 
-export class MenuContainer implements OnInit {
+export class SiteNavComponent implements OnInit {
   items: MenuItem[];
 
   ngOnInit() {
       this.items = [
-          {label: 'Dashboard', icon: 'fa-bar-chart', routerLink: ['/']},
+          {label: 'Dashboard', icon: 'fa-bar-chart', routerLink: ['/dashboard']},
           {label: 'Pages', icon: 'fa-calendar', routerLink: ['/pages']},
           {label: 'Test', icon: 'fa-book', routerLink: ['/test']}
       ];

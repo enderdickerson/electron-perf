@@ -5,18 +5,26 @@ import { HttpModule } from "@angular/http";
 import { CommonModule } from '@angular/common';
 
 import { TestComponent } from './test/test.component';
+import { TestRoutingModule } from './test-routing.module';
+import { WebAddressComponent } from './test/web-address/web-address.component';
+import { TestResultsComponent } from './test/test-results/test-results.component';
 
 @NgModule({
     imports: [
       FormsModule,
       HttpModule,
-      CommonModule
+      CommonModule,
+      TestRoutingModule
     ],
     exports: [
-      TestComponent
+      TestComponent,
+      WebAddressComponent,
+      TestResultsComponent
     ],
     declarations: [
       TestComponent,
+      WebAddressComponent,
+      TestResultsComponent
     ],
     providers: [
     ],
