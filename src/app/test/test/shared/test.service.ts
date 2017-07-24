@@ -15,8 +15,21 @@ export class TestService {
     }
 
     let fork = childProcess.fork(__dirname);
-    fork.on('message', () => {
-      
-    })
+
+    fork.on('message', (result) => {
+      console.log('result: ', result);
+    });
+
+    fork.send(fib(45));
   }
+}
+
+function fib(n) {
+   if (n === 0) {
+     return 0;
+   } else if (n === 1) {
+     return 1;
+   } else {
+     return fib(n-1) + fib(n-2);
+   }
 }
