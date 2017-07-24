@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import * as path from 'path';
-import * as url from 'url';
-import * as childProcess from 'child_process';
+import { WindowService } from './window.service';
 
 @Injectable()
 
 export class TestService {
-  constructor() {
+  constructor(private winService: WindowService) {
   }
 
   runTest(url) {
@@ -14,22 +12,12 @@ export class TestService {
       throw new Error('No url specified for testing.');
     }
 
-    let fork = childProcess.fork(__dirname);
+    let fork = this.winService.nativeWindow.child_process.fork('./src/background/runtest.js');
 
     fork.on('message', (result) => {
       console.log('result: ', result);
     });
 
-    fork.send(fib(45));
+    fork.send(url);
   }
-}
-
-function fib(n) {
-   if (n === 0) {
-     return 0;
-   } else if (n === 1) {
-     return 1;
-   } else {
-     return fib(n-1) + fib(n-2);
-   }
 }

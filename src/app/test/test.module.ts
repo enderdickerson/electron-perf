@@ -9,6 +9,7 @@ import { TestRoutingModule } from './test-routing.module';
 import { WebAddressComponent } from './test/web-address/web-address.component';
 import { TestResultsComponent } from './test/test-results/test-results.component';
 import { TestService } from './test/shared/test.service';
+import { WindowService } from './test/shared/window.service';
 
 import { InputTextModule, ButtonModule } from 'primeng/primeng'
 
@@ -32,7 +33,8 @@ import { InputTextModule, ButtonModule } from 'primeng/primeng'
       TestResultsComponent
     ],
     providers: [
-      TestService
+      TestService,
+      WindowService
     ],
 })
 
