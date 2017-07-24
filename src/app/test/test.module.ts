@@ -8,13 +8,18 @@ import { TestComponent } from './test/test.component';
 import { TestRoutingModule } from './test-routing.module';
 import { WebAddressComponent } from './test/web-address/web-address.component';
 import { TestResultsComponent } from './test/test-results/test-results.component';
+import { TestService } from './test/shared/test.service';
+
+import { InputTextModule, ButtonModule } from 'primeng/primeng'
 
 @NgModule({
     imports: [
       FormsModule,
       HttpModule,
       CommonModule,
-      TestRoutingModule
+      TestRoutingModule,
+      InputTextModule,
+      ButtonModule
     ],
     exports: [
       TestComponent,
@@ -27,6 +32,7 @@ import { TestResultsComponent } from './test/test-results/test-results.component
       TestResultsComponent
     ],
     providers: [
+      TestService
     ],
 })
 

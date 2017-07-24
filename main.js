@@ -24,6 +24,7 @@ app.on('ready', () => {
 
   win.on('closed', function() {
     win = null;
+    background = null;
   });
 });
 
