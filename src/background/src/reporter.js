@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
-let Report = mongoose.model('Report');
-let Result = mongoose.model('Result');
+let Report = require('../../models/reportmodel');
+let Result = require('../../models/resultmodel');
 let os = require('os');
 let URL = require('url').URL;
 

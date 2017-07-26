@@ -14,6 +14,6 @@ export class TestComponent {
 
   onRun(url) {
     console.log('Run this url test: ' + url);
-    this.testService.runTest(url);
+    this.testService.runTest();
   }
 }

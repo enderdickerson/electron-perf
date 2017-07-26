@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ResultService } from '../shared/result.service';
 
 @Component({
   selector: 'dashboard',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
 })
 
 export class DashboardComponent {
+  result: any;
 
+  constructor(private resultService: ResultService) {
+    resultService.get().then(function(results) {
+      this.result = results;
+    });
+  }
 }

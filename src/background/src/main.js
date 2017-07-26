@@ -1,10 +1,15 @@
 let chai = require('chai');
 let chaiAsPromised = require('chai-as-promised');
 let mongoose = require('mongoose');
-require('./reportmodel');
-require('./testmodel');
 
-let Test = mongoose.model('Test');
+import Result as '../../models/resultmodel';
+import Report as '../../models/reportmodel';
+import Test as '../../models/testmodel';
+
+// require('./reportmodel');
+// require('./testmodel');
+
+let Test = require('../../models/testmodel');
 
 let config = require('../../../config');
 

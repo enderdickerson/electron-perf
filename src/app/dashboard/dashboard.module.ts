@@ -7,13 +7,15 @@ import { CommonModule } from '@angular/common';
 // Custom imports
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { WindowService } from '../shared/window.service';
+import { ResultService } from './shared/result.service';
 
 @NgModule({
     imports: [
       FormsModule,
       HttpModule,
       CommonModule,
-      DashboardRoutingModule
+      DashboardRoutingModule      
     ],
     exports: [
       DashboardComponent
@@ -22,6 +24,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
       DashboardComponent,
     ],
     providers: [
+      WindowService,
+      ResultService
     ],
 })
 
