@@ -1,0 +1,50 @@
+$gray-blue: #202429
+$white: #ffffff
+$black: #000000
+$bright-blue: #0567D6
+$gray-white: #EFEFF0
+$muted-green: #A3B667
+$muted-blue: #63A0E4
+$black-hint: rgba(0,0,0,0.12)
+
+$base-color: lighten($gray-white, 5%)
+$accent: $bright-blue
+$text-primary: $black
+$borders: $black-hint
+
+::ng-deep .ui-tabmenu
+  padding-top: 0
+  .ui-tabmenu-nav
+    border: none
+    border-radius: 0
+    padding: 0
+    background-color: $base-color
+    margin: 0
+    overflow: hidden
+    border-bottom: 1px solid $black-hint
+    > li.ui-state-default
+      background: $base-color
+      a .ui-menuitem-text,a .ui-menuitem-icon
+        color: $text-primary
+    > li.ui-state-active
+      background: $base-color
+      border-bottom: 4px solid $accent
+      padding-bottom: 4px
+      a .ui-menuitem-text,a .ui-menuitem-icon
+        // color: rgba(0,0,0,0.84)
+        color: $text-primary
+    > li:not(.ui-state-active):not(.ui-state-disabled):hover
+      background-color: lighten($base-color, 5%)
+      border-color: $borders
+    .ui-tabmenuitem
+      margin: 0
+      background: transparent
+      border: none
+      border-radius: 0
+      padding: 8px
+      border-right: 1px solid $borders
+      background-color: $base-color
+      .ui-menuitem-link
+        background: transparent
+        .ui-menuitem-text
+          margin-left: 8px

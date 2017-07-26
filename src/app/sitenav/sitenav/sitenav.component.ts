@@ -5,7 +5,7 @@ import { MenuItem } from 'primeng/primeng';
 @Component({
   selector: 'sitenav',
   templateUrl: './sitenav.component.html',
-  styleUrls: ['./sitenav.component.css']
+  styleUrls: ['sitenav.component.sass']
 })
 
 export class SiteNavComponent implements OnInit {
