@@ -1,6 +1,7 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
+let args = require('yargs');
 
 require('dotenv').config();
 
@@ -10,6 +11,8 @@ let win = null;
 
 app.on('ready', () => {
   win = new BrowserWindow({width: 1200, height: 600});
+
+  process.env.USE_ANGULAR = args.angular !== 'false';
 
   if (process.env.PACKAGE === 'true') {
     win.loadURL(url.format({

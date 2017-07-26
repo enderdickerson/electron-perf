@@ -18,6 +18,6 @@ export class TestService {
       console.log('result: ', result);
     });
 
-    fork.send(url);
+    fork.send('go');
   }
 }

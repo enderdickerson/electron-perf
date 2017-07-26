@@ -6,7 +6,7 @@ require('./testmodel');
 
 let Test = mongoose.model('Test');
 
-let config = require('../config');
+let config = require('../../../config');
 
 chai.use(chaiAsPromised);
 
@@ -27,15 +27,22 @@ before(function(done) {
   conn.once('open', function() {
     console.log('Connected!');
 
-    Test.find({}).exec(function(err, tests) {
-      if (err) {
-        console.error(err);
-      }
+    // Test.find({}).exec(function(err, tests) {
+    //   if (err) {
+    //     console.error(err);
+    //   }
+    //
+    //   console.log('Test suite:', tests);
+      // global.testSuite = tests || [];
+      // done();
+    // });
 
-      console.log('Test suite:', tests);
-      global.testSuite = tests || [];
-      done();
-    });
+    global.testSuite = [
+      {
+        url: 'https://material.angularjs.org/latest/'
+      }
+    ]
+    done();
   });
 });
 
