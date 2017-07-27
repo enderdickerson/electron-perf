@@ -11,7 +11,7 @@ require('electron-reload')(__dirname);
 let win = null;
 
 app.on('ready', () => {
-  win = new BrowserWindow({width: 1200, height: 600});
+  win = new BrowserWindow({width: 1200, height: 600, frame: false});
 
   process.env.USE_ANGULAR = args.angular !== 'false';
 
@@ -22,13 +22,13 @@ app.on('ready', () => {
       slashes: true
     }));
   } else {
-      win.loadURL(process.env.HOST);
-      win.webContents.openDevTools();
+    win.loadURL(process.env.HOST);
+    win.webContents.openDevTools();
   }
 
   win.on('closed', function() {
     win = null;
-    background = null;
+    // background = null;
   });
 });
 
@@ -42,4 +42,4 @@ app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
     app.quit();
   }
-})
+});

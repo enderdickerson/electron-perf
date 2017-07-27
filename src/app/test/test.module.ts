@@ -8,10 +8,10 @@ import { TestComponent } from './test/test.component';
 import { TestRoutingModule } from './test-routing.module';
 import { WebAddressComponent } from './test/web-address/web-address.component';
 import { TestResultsComponent } from './test/test-results/test-results.component';
-import { TestService } from './test/shared/test.service';
-import { WindowService } from '../shared/window.service';
 
-import { InputTextModule, ButtonModule } from 'primeng/primeng'
+import { SharedModule } from '../shared/shared.module';
+
+import { InputTextModule, ButtonModule } from 'primeng/primeng';
 
 @NgModule({
     imports: [
@@ -20,7 +20,8 @@ import { InputTextModule, ButtonModule } from 'primeng/primeng'
       CommonModule,
       TestRoutingModule,
       InputTextModule,
-      ButtonModule
+      ButtonModule,
+      SharedModule
     ],
     exports: [
       TestComponent,
@@ -33,8 +34,6 @@ import { InputTextModule, ButtonModule } from 'primeng/primeng'
       TestResultsComponent
     ],
     providers: [
-      TestService,
-      WindowService
     ],
 })
 

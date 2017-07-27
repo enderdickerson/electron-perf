@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { WindowService } from '../../shared/window.service';
 
 declare global {
   interface Window {
@@ -8,22 +7,8 @@ declare global {
   }
 }
 
-// let electron = window.require('electron');
-
-
 const mongoose = window.require('mongoose');
 const remote = window.require('electron').remote;
-
-// const ReportSchema = require('../../models/reportmodel');
-// const ResultSchema = require('../../models/reportmodel');
-
-// let mongoose = require('electron').remote.require('mongoose');
-
-// import Report from '../../../models/reportmodel';
-// let config = require('../../../config');
-// import { connectionString, options } from '../../../../config';
-
-// const config = require('../../../../config');
 
 import * as q from 'Q';
 
@@ -34,9 +19,6 @@ export class ResultService {
   }
 
   get() {
-    // let mongoose = this.winService.nativeWindow.mongoose;
-
-    // let connection: any = mongoose.createConnection(connectionString, options)
     const deferred = q.defer();
 
     const path = window.require('path');

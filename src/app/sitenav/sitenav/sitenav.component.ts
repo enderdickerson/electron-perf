@@ -14,8 +14,8 @@ export class SiteNavComponent implements OnInit {
   ngOnInit() {
       this.items = [
           {label: 'Dashboard', icon: 'fa-bar-chart', routerLink: ['/dashboard']},
-          {label: 'Pages', icon: 'fa-calendar', routerLink: ['/pages']},
-          {label: 'Test', icon: 'fa-book', routerLink: ['/test']}
+          {label: 'Results', icon: 'fa-clock-o', routerLink: ['/results']},
+          {label: 'Tests', icon: 'fa-book', routerLink: ['/test']}
       ];
   }
 }

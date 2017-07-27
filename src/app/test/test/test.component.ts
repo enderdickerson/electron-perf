@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TestService } from './shared/test.service';
+import { TestService } from '../../shared/test.service';
 
 @Component({
   selector: 'test',

@@ -9,10 +9,10 @@ import { ButtonModule } from 'primeng/primeng';
 // Custom imports
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { WindowService } from '../shared/window.service';
-import { ResultService } from './shared/result.service';
-import { ResultListComponent } from './dashboard/resultlist/resultlist.component';
-import { ResultViewComponent } from './dashboard/resultview/resultview.component';
+import { RunDateComponent } from './dashboard/rundate/rundate.component';
+
+import { SharedModule } from '../shared/shared.module';
+import { PercentageChangeGraphComponent } from './dashboard/percentagechangegraph/percentagechangegraph.component';
 
 @NgModule({
     imports: [
@@ -20,22 +20,18 @@ import { ResultViewComponent } from './dashboard/resultview/resultview.component
       HttpModule,
       CommonModule,
       DashboardRoutingModule,
-      ButtonModule
+      ButtonModule,
+      SharedModule
     ],
     exports: [
-      DashboardComponent,
-      ResultListComponent,
-      ResultViewComponent
+      DashboardComponent
     ],
     declarations: [
       DashboardComponent,
-      ResultListComponent,
-      ResultViewComponent
+      RunDateComponent,
+      PercentageChangeGraphComponent
     ],
-    providers: [
-      WindowService,
-      ResultService
-    ],
+    providers: [],
 })
 
 export class DashboardModule { }

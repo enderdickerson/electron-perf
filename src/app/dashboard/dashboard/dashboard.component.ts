@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ResultService } from '../shared/result.service';
+import { ResultService } from '../../shared/result.service';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -8,23 +10,36 @@ import { ResultService } from '../shared/result.service';
 })
 
 export class DashboardComponent implements OnInit {
-  results: any;
-  result: any;
+  lastRunDate: any;
+  results: [any];
 
-  constructor(private resultService: ResultService, private cdr: ChangeDetectorRef) {
-    this.results = [];
-    this.result = null;
-  }
+  constructor(private resultService: ResultService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.resultService.get().then((value) => {
-      this.results = value;
-      this.cdr.detectChanges();
+    this.resultService.get().then((results: [any]) => {
+      if (results.length > 0) {
+        this.results = results;
+      }
+    }).then(() => {
+      this.getRunDate();
+      this.getEnvironmentTiming();
     });
   }
 
-  selectResult(report) {
-    this.result = report;
+  private getRunDate() {
+    const runDate = this.results[0].results[0].endTime;
+
+    this.lastRunDate = {
+      date: moment(runDate).format('MM/DD/YY'),
+      time: moment(runDate).format('HH:MM')
+    };
+
     this.cdr.detectChanges();
+  }
+
+  private getEnvironmentTiming() {
+    let timings = this.results.reduce((all, item) => {
+      return all.concat(item.results);
+    });
   }
 }

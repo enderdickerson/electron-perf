@@ -35,6 +35,28 @@ $gray-white: #EFEFF0
   src: local('Roboto'), local('Roboto-Bold'), url('font/roboto-bold.woff2') format('woff2')
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215
 
+@font-face
+  font-family: 'Material Icons'
+  font-style: normal
+  font-weight: 400
+  src: local('Material Icons'), local('material-icons-regular'), url('font/material-icons-regular.woff2') format('woff2')
+
+.material-icons
+  font-family: 'Material Icons'
+  font-weight: normal
+  font-style: normal
+  font-size: 24px /* Preferred icon size */
+  display: inline-block
+  line-height: 1
+  text-transform: none
+  letter-spacing: normal
+  word-wrap: normal
+  white-space: nowrap
+  direction: ltr
+  -webkit-font-smoothing: antialiased
+  text-rendering: optimizeLegibility
+  -moz-osx-font-smoothing: grayscale
+  font-feature-settings: 'liga'
 
 body
   font-family: 'Roboto'
@@ -42,3 +64,34 @@ body
   margin: 0
   background-color: lighten($gray-white, 5%)
   height: 100%
+  -ms-overflow-style: scrollbar
+  -webkit-app-region: drag
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="text"],
+a,
+button,
+textarea
+  -webkit-app-region: no-drag
+
+h1,h2,h3,h4,h5,h6
+  -webkit-user-select: none
+
+$gray-blue: lighten(#202429, 5%)
+
+.app-toolbar
+  height: 30px
+  background-color: $gray-blue
+  .actions
+    float: right
+    margin-right: 8px
+    .action-button
+      margin-left: 8px
+      margin-right: 8px
+      color: #ffffff
+      font-weight: 100
+      line-height: 30px
+      cursor: pointer
+      font-size: 18px

@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
       RouterModule.forRoot([
           {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
           {path: 'dashboard', loadChildren: 'app/dashboard/dashboard.module#DashboardModule'},
-          {path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule'},
+          {path: 'results', loadChildren: 'app/results/results.module#ResultsModule'},
           {path: 'test', loadChildren: 'app/test/test.module#TestModule'}
       ])
     ],

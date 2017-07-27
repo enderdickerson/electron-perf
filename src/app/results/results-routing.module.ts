@@ -1,13 +1,13 @@
 import { RouterModule } from '@angular/router';
-import { PagesComponent } from './pages/pages.component';
+import { ResultsComponent } from './results/results.component';
 import { NgModule } from '@angular/core';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
             {
-                path: 'pages',
-                component: PagesComponent
+                path: 'results',
+                component: ResultsComponent
             }
         ])
     ],
@@ -16,4 +16,4 @@ import { NgModule } from '@angular/core';
     ]
 })
 
-export class PagesRoutingModule {}
+export class ResultsRoutingModule {}

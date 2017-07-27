@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { WindowService } from '../../../shared/window.service';
+
+import { WindowService } from './window.service';
 
 @Injectable()
 
@@ -8,7 +9,7 @@ export class TestService {
   }
 
   runTest() {
-    let fork = this.winService.nativeWindow.child_process.fork('./src/background/runtest.js');
+    const fork = this.winService.nativeWindow.child_process.fork('./src/background/runtest.js');
 
     fork.on('message', (result) => {
       console.log('result: ', result);
