@@ -1,6 +1,8 @@
 let child_process = require('child_process');
 let q = require('Q');
 let args = require('yargs').argv;
+let config = require('../../config')
+const path = require('path');
 
 process.on('message', function(input) {
   output = startApp();
@@ -19,7 +21,19 @@ function startApp() {
 function startEndToEndTests() {
   let deferred = q.defer();
 
-  runCmdExec('node node_modules\\protractor\\bin\\protractor src/background/src/protractorconf.js', deferred);
+  if (args.tests) {
+    let tests = JSON.parse(args.tests);
+
+    console.log('Tests for this process to run: ', tests);
+  }
+
+  const protractorPath = path.join('node_modules', 'protractor', 'bin', 'protractor');
+
+  const confPath = path.join('src', 'background', 'src', 'protractorconf.js');
+
+  // runCmdExec('node ' + protractorPath + ' ' + confPath, deferred);
+
+  // runCmdExec('node node_modules\\protractor\\bin\\protractor src/background/src/protractorconf.js', deferred);
 
   return deferred.promise;
 }
@@ -45,7 +59,14 @@ function setUpWebDriver() {
 
   console.log('getting update');
 
-  runCmdExec('node node_modules\\webdriver-manager\\bin\\webdriver-manager update --ignore_ssl ' + (args.proxy ? '--proxy ' + args.proxy : '') + ' --gecko false', deferred);
+  if (config.proxy) {
+    console.log('using proxy: ' + config.proxy);
+  }
+
+  const webdriverPath = path.join('node_modules', 'webdriver-manager', 'bin',
+    'webdriver-manager');
+
+  runCmdExec('node ' + webdriverPath + ' update --ignore_ssl ' + (config.proxy ? ('--proxy ' + config.proxy) : '') + ' --gecko false', deferred);
 
   return deferred.promise;
 }
