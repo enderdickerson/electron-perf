@@ -1,0 +1,11 @@
+<div class="layout-menu">
+  <div class="nano">
+    <div class="menu-scroll-content">
+      <div class="result-list">
+        <button *ngFor="let result of results" class="btn-outline as-sidenav" pButton type="button"
+                label="{{result.name.substr(0,25)}}{{result.name.length > 25 ? '...' : ''}}" (click)="onClick.emit(result)"></button>
+      </div>
+    </div>
+  </div>
+</div>
+

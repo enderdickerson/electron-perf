@@ -1,3 +1,2 @@
-<h2>Dashboard</h2>
-
-<div>{{ result }}</div>
+<app-result-list [results]="results" (onClick)="selectResult($event)"></app-result-list>
+<app-result-view [result]="result"></app-result-view>

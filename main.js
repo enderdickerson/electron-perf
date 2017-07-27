@@ -1,7 +1,8 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 let args = require('yargs');
+const config = require('./config');
 
 require('dotenv').config();
 

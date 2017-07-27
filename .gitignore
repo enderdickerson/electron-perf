@@ -32,6 +32,9 @@
 npm-debug.log
 testem.log
 /typings
+config.js
+config.ts
+client.pem
 
 # e2e
 /e2e/*.js

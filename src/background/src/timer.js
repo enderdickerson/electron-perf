@@ -29,7 +29,10 @@ function getTimed(arr, deferred, repeat) {
           getTimed(arr, deferred, repeat + 1);
         }, (pause * 1000));
       } else {
-        deferred.resolve();
+        let pauseAfter = arr.waitAfter || 0;
+        setTimeout(function() {
+          deferred.resolve();
+        }, (pauseAfter) * 1000);
       }
     });
   });

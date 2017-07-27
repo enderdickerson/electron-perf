@@ -2,14 +2,14 @@ let chai = require('chai');
 let chaiAsPromised = require('chai-as-promised');
 let mongoose = require('mongoose');
 
-import Result as '../../models/resultmodel';
-import Report as '../../models/reportmodel';
-import Test as '../../models/testmodel';
+// import Result as '../../models/resultmodel';
+// import Report as '../../models/reportmodel';
+// import Test as '../../models/testmodel';
 
-// require('./reportmodel');
-// require('./testmodel');
+require('../../src/app/models/reportmodel');
+require('../../src/app/models/testmodel');
 
-let Test = require('../../models/testmodel');
+let Test = require('../../src/app/models/testmodel');
 
 let config = require('../../../config');
 
@@ -46,7 +46,7 @@ before(function(done) {
       {
         url: 'https://material.angularjs.org/latest/'
       }
-    ]
+    ];
     done();
   });
 });
