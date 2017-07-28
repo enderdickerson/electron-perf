@@ -29,7 +29,7 @@ export class TestStore {
 
     window.require(path.join(appPath, 'src/app/models/testmodel'));
 
-    mongoose.connect(config.connectionString(), config.options());
+    mongoose.connect(config.connectionString, config.options);
 
     const db = mongoose.connection;
 

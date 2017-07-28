@@ -1,1 +1,4 @@
-<button (click)="run()" pButton type="button" label="RUN FULL SUITE"></button>
+<div *ngIf="hasPendingTests === true">Tests running</div>
+<div *ngIf="hasPendingTests === false">No tests running</div>
+
+<button (click)="run()" pButton type="button" [disabled]="hasPendingTests" label="RUN FULL SUITE"></button>

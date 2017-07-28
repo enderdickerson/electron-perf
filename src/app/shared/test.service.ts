@@ -1,25 +1,38 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 
 import { WindowService } from './window.service';
+import { Observable } from 'rxjs/Observable';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {isBoolean} from 'util';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 
 export class TestService {
+  count: number;
+  maxThreads: number;
+  pendingTests: Subject<boolean> = new Subject<boolean>();
+
   constructor(private winService: WindowService) {
+    this.maxThreads = 4;
+    this.count = 0;
+    this.pendingTests.next(false);
+  }
+
+  public getPendingTests(): Observable<boolean> {
+    return this.pendingTests;
   }
 
   splitIntoGroups(original) {
-    const MAX_THREADS = 4;
+    let threads = this.maxThreads;
 
-    let threads = MAX_THREADS;
-
-    if (original.length < MAX_THREADS) {
+    if (original.length < this.maxThreads) {
       threads = original.length;
     }
 
-    let start = [];
+    const start = [];
 
-    for (let i = 0; i < MAX_THREADS; i++) {
+    for (let i = 0; i < this.maxThreads; i++) {
       start.push([]);
     }
 
@@ -63,11 +76,26 @@ export class TestService {
 
     const win = this.winService;
 
+    this.pendingTests.next(true);
+    console.log('Setting pending to true');
+
+    let count = this.count;
+
+    const pendingTests = this.pendingTests;
+    const maxThreads = this.maxThreads;
+
     groups.forEach(function(tests) {
       const fork = win.nativeWindow.child_process.fork('./src/background/runtest.js');
 
       fork.on('message', (result) => {
         console.log('result: ', result);
+        count++;
+
+        if (count >= maxThreads) {
+          pendingTests.next(false);
+          count = 0;
+          console.log('Setting pending to false');
+        }
       });
 
       fork.send({msgtype: 'dependencies', content: tests});

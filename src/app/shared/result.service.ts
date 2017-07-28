@@ -29,7 +29,7 @@ export class ResultService {
 
     window.require(path.join(appPath, 'src/app/models/reportmodel'));
 
-    mongoose.connect(config.connectionString(), config.options());
+    mongoose.connect(config.connectionString, config.options);
 
     const db = mongoose.connection;
 

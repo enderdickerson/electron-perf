@@ -1,2 +1,2 @@
-<web-address (onRun)="onRun($event)"></web-address>
+<app-web-address [pending]="runningTests" (onRun)="onRun($event)"></app-web-address>
 <app-test-list [tests]="tests"></app-test-list>

@@ -31,6 +31,8 @@ function startApp() {
   return setUpWebDriver()
     .then(function() {
       return startEndToEndTests();
+    }).then(function() {
+      process.send('finished');
     });
 }
 

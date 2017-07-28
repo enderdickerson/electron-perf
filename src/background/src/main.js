@@ -2,14 +2,8 @@ let chai = require('chai');
 let chaiAsPromised = require('chai-as-promised');
 let mongoose = require('mongoose');
 
-// import Result as '../../models/resultmodel';
-// import Report as '../../models/reportmodel';
-// import Test as '../../models/testmodel';
-
 require('../../app/models/reportmodel');
 require('../../app/models/testmodel');
-
-// let Test = require('../../app/models/testmodel');
 
 let config = require('../../../config');
 
@@ -20,8 +14,8 @@ global.testSuite = [];
 
 let conn;
 
-let mongodbUri = config.connectionString();
-let mongodbOptions = config.options();
+let mongodbUri = config.connectionString;
+let mongodbOptions = config.options;
 
 before(function(done) {
   mongoose.connect(mongodbUri, mongodbOptions);
