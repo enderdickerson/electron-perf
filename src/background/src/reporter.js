@@ -1,10 +1,12 @@
 let mongoose = require('mongoose');
-let Report = require('../../models/reportmodel');
-let Result = require('../../models/resultmodel');
+
 let os = require('os');
 let URL = require('url').URL;
 
 module.exports.log = function(time, url) {
+  let Report = mongoose.model('Report');
+  let Result = mongoose.model('Result');
+
   const parsedUrl = new URL(url);
 
   let name = parsedUrl.pathname.substr(1);

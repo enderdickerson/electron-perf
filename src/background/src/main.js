@@ -6,10 +6,10 @@ let mongoose = require('mongoose');
 // import Report as '../../models/reportmodel';
 // import Test as '../../models/testmodel';
 
-require('../../src/app/models/reportmodel');
-require('../../src/app/models/testmodel');
+require('../../app/models/reportmodel');
+require('../../app/models/testmodel');
 
-let Test = require('../../src/app/models/testmodel');
+// let Test = require('../../app/models/testmodel');
 
 let config = require('../../../config');
 
@@ -32,6 +32,10 @@ before(function(done) {
   conn.once('open', function() {
     console.log('Connected!');
 
+    global.testSuite = JSON.parse(process.env.TESTS);
+
+    let Test = mongoose.model('Test');
+
     // Test.find({}).exec(function(err, tests) {
     //   if (err) {
     //     console.error(err);
@@ -42,11 +46,11 @@ before(function(done) {
       // done();
     // });
 
-    global.testSuite = [
-      {
-        url: 'https://material.angularjs.org/latest/'
-      }
-    ];
+    // global.testSuite = [
+    //   {
+    //     url: 'https://material.angularjs.org/latest/'
+    //   }
+    // ];
     done();
   });
 });

@@ -1,4 +1,4 @@
-let mongoose = window.require('mongoose');
+let mongoose = require('mongoose');
 
 const TestSchema = new mongoose.Schema({
   url: String,

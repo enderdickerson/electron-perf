@@ -1,4 +1,4 @@
-let mongoose = window.require('mongoose');
+let mongoose = require('mongoose');
 // let ResultSchema = require('./resultmodel');
 
 const ResultSchema = new mongoose.Schema({

@@ -7,11 +7,11 @@ import { CommonModule } from '@angular/common';
 import { TestComponent } from './test/test.component';
 import { TestRoutingModule } from './test-routing.module';
 import { WebAddressComponent } from './test/web-address/web-address.component';
-import { TestResultsComponent } from './test/test-results/test-results.component';
 
 import { SharedModule } from '../shared/shared.module';
 
 import { InputTextModule, ButtonModule } from 'primeng/primeng';
+import { TestListComponent } from './test/testlist/testlist.component';
 
 @NgModule({
     imports: [
@@ -25,16 +25,14 @@ import { InputTextModule, ButtonModule } from 'primeng/primeng';
     ],
     exports: [
       TestComponent,
-      WebAddressComponent,
-      TestResultsComponent
+      WebAddressComponent
     ],
     declarations: [
       TestComponent,
       WebAddressComponent,
-      TestResultsComponent
+      TestListComponent
     ],
-    providers: [
-    ],
+    providers: [],
 })
 
 export class TestModule { }

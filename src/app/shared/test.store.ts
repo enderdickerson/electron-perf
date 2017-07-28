@@ -14,7 +14,7 @@ import * as q from 'Q';
 
 @Injectable()
 
-export class ResultService {
+export class TestStore {
   constructor() {
   }
 
@@ -27,7 +27,7 @@ export class ResultService {
 
     const config = remote.require(path.join(appPath, 'config'));
 
-    window.require(path.join(appPath, 'src/app/models/reportmodel'));
+    window.require(path.join(appPath, 'src/app/models/testmodel'));
 
     mongoose.connect(config.connectionString(), config.options());
 
@@ -36,11 +36,12 @@ export class ResultService {
     db.on('error', console.error.bind(console, 'connection error:'));
 
     db.once('open', () => {
-      const Report = mongoose.model('Report');
+      const Test = mongoose.model('Test');
 
       console.log('Connected to MongoDb');
-      return Report.find({}, (err, results) => {
+      return Test.find({}, (err, results) => {
         db.close();
+        console.log('Tests: ', results);
         deferred.resolve(results);
       });
     });

@@ -1,11 +1,27 @@
 let child_process = require('child_process');
 let q = require('Q');
 let args = require('yargs').argv;
-let config = require('../../config')
+let config = require('../../config');
 const path = require('path');
 
 process.on('message', function(input) {
-  output = startApp();
+  if (input.msgtype === 'dependencies') {
+    console.log('dependencies: ', input.content);
+    process.env.TESTS = JSON.stringify(input.content);
+  }
+
+  if (input.msgtype === 'command') {
+    if (input.content === 'begin') {
+      console.log('begin');
+      output = startApp();
+    }
+
+    if (input.content === 'halt') {
+      console.log('end');
+      process.exit();
+    }
+  }
+
   // process.send(output);
 });
 
@@ -21,17 +37,17 @@ function startApp() {
 function startEndToEndTests() {
   let deferred = q.defer();
 
-  if (args.tests) {
-    let tests = JSON.parse(args.tests);
-
-    console.log('Tests for this process to run: ', tests);
-  }
+  // if (args.tests) {
+  //   let tests = JSON.parse(args.tests);
+  //
+  //   console.log('Tests for this process to run: ', tests);
+  // }
 
   const protractorPath = path.join('node_modules', 'protractor', 'bin', 'protractor');
 
   const confPath = path.join('src', 'background', 'src', 'protractorconf.js');
 
-  // runCmdExec('node ' + protractorPath + ' ' + confPath, deferred);
+  runCmdExec('node ' + protractorPath + ' ' + confPath, deferred);
 
   // runCmdExec('node node_modules\\protractor\\bin\\protractor src/background/src/protractorconf.js', deferred);
 
