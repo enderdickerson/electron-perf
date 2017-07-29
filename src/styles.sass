@@ -65,19 +65,13 @@ body
   background-color: lighten($gray-white, 5%)
   height: 100%
   -ms-overflow-style: scrollbar
+
+.app-toolbar
   -webkit-app-region: drag
-
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-input[type="text"],
-a,
-button,
-textarea
-  -webkit-app-region: no-drag
-
-h1,h2,h3,h4,h5,h6
-  -webkit-user-select: none
+  input[type="button"], a, button
+    -webkit-app-region: no-drag
+  h1,h2,h3,h4,h5,h6
+    -webkit-user-select: none
 
 $gray-blue: lighten(#202429, 5%)
 

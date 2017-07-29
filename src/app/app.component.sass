@@ -1,13 +1,34 @@
-.main-content
-  //padding-left: 16px
-  //padding-right: 16px
-
 ::ng-deep
   .card
     background-color: #ffffff
     border: 1px solid rgba(0,0,0,0.12)
     margin: 16px
+    margin-bottom: 0
     border-radius: 2px
     -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12)
     .card-content
       padding: 16px
+    .heading-3
+      margin-top: 0
+  .heading-3
+    font-weight: 300
+    font-size: 28px
+  .content-view-with-sidebar
+    overflow: auto
+    height: 100%
+    position: fixed
+    width: calc(100% - 285px)
+  .content-view
+    overflow: auto
+    height: 100%
+    position: fixed
+    width: 100%
+  .scroll-this
+    height: 100%
+    overflow-y: scroll
+    overflow-x: scroll
+  ::-webkit-scrollbar-thumb
+    background: rgba(0,0,0,0.1)
+  ::-webkit-scrollbar
+    background: transparent
+    width: 8px

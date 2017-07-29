@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 
 import { WindowService } from './window.service';
-import { ResultService } from './result.service';
+import { ResultStore } from './result.store';
 import { TestService } from './test.service';
-import {TestStore} from './test.store';
+import { TestStore } from './test.store';
+import { ConnectionService } from './connection.service';
 
 @NgModule({
   declarations: [],
   imports: [],
   providers: [
     WindowService,
-    ResultService,
+    ResultStore,
     TestService,
-    TestStore
+    TestStore,
+    ConnectionService
   ]
 })
 

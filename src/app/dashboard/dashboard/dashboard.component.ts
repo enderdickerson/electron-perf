@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ResultService } from '../../shared/result.service';
+import { ResultStore } from '../../shared/result.store';
 import * as moment from 'moment';
-
 
 @Component({
   selector: 'app-dashboard',
@@ -13,10 +12,10 @@ export class DashboardComponent implements OnInit {
   lastRunDate: any;
   results: [any];
 
-  constructor(private resultService: ResultService, private cdr: ChangeDetectorRef) {}
+  constructor(private resultStore: ResultStore, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.resultService.get().then((results: [any]) => {
+    this.resultStore.get().then((results: [any]) => {
       if (results.length > 0) {
         this.results = results;
       }

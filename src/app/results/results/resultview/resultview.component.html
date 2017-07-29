@@ -1,11 +1,15 @@
-<div class="content-view">
-  <div class="main-info card" *ngIf="result">
-    <!--{{ result }}-->
+<div class="content-view-with-sidebar">
+  <div class="scroll-this">
+    <div class="main">
+      <div class="main-info card" *ngIf="result">
+        <!--{{ result }}-->
 
-    <h3>{{result.name}}</h3>
-    <p>Results</p>
-    <ul>
-      <li *ngFor="let run of result.results">{{run.elapsed + 's'}} - {{run.host}}</li>
-    </ul>
+        <h3>{{result.name}}</h3>
+        <p>Results</p>
+        <ul>
+          <li *ngFor="let run of result.results">{{run.elapsed + 's'}} - {{run.host}}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

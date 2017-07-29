@@ -7,52 +7,59 @@ declare global {
   }
 }
 
-const mongoose = window.require('mongoose');
-const remote = window.require('electron').remote;
+// const mongoose = window.require('mongoose');
+// const remote = window.require('electron').remote;
 
 import * as q from 'Q';
+
+import { ConnectionService } from './connection.service';
 
 @Injectable()
 
 export class TestStore {
-  constructor() {
-  }
+  constructor(private db: ConnectionService) {}
 
   get() {
+    const Test = this.db.mongoose.model('Test');
+
+    const query = Test.find({});
+
+    return query.exec((err, tests) => {
+      console.log('tests retrieved: ', tests);
+      return tests;
+    });
+  }
+
+  save(testData) {
+    const Test = this.db.mongoose.model('Test');
+
+    const query = Test.findOne({'url': testData.url});
+
     const deferred = q.defer();
 
-    const path = window.require('path');
+    query.exec((err, test) => {
+      if (err) {
+        console.log('error: ', err);
+        return;
+      }
 
-    const appPath = remote.app.getAppPath();
+      if (test === null) {
+        test = new Test();
+      }
 
-    const config = remote.require(path.join(appPath, 'config'));
+      test.url = testData.url;
+      test.isAngular = testData.isAngular;
+      test.runs = testData.runs;
 
-    window.require(path.join(appPath, 'src/app/models/testmodel'));
+      test.save((err2) => {
+        if (err2) {
+          console.log('error: ', err2);
+        }
 
-    mongoose.connect(config.connectionString, config.options);
-
-    const db = mongoose.connection;
-
-    db.on('error', console.error.bind(console, 'connection error:'));
-
-    db.once('open', () => {
-      const Test = mongoose.model('Test');
-
-      console.log('Connected to MongoDb');
-      return Test.find({}, (err, results) => {
-        db.close();
-        console.log('Tests: ', results);
-        deferred.resolve(results);
+        deferred.resolve();
       });
     });
 
     return deferred.promise;
-    //
-    // return Report.find({}).then((err, results) => {
-    //   return results;
-    // }).then(function() {
-    //   connection.close();
-    // });
-    // return q.when();
   }
 }

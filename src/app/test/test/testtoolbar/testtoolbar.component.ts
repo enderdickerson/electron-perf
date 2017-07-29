@@ -3,12 +3,12 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
 @Component({
-  selector: 'app-web-address',
-  templateUrl: './web-address.component.html',
-  styleUrls: ['./web-address.component.sass']
+  selector: 'app-test-toolbar',
+  templateUrl: './testtoolbar.component.html',
+  styleUrls: ['./testtoolbar.component.sass']
 })
 
-export class WebAddressComponent implements OnInit {
+export class TestToolbarComponent implements OnInit {
   address: string;
   hasPendingTests: boolean;
   @Output() onRun = new EventEmitter();

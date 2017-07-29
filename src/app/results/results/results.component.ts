@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ResultService } from '../../shared/result.service';
+import { ResultStore } from '../../shared/result.store';
 
 @Component({
   selector: 'app-results',
@@ -11,13 +11,13 @@ export class ResultsComponent implements OnInit {
   results: any;
   result: any;
 
-  constructor(private resultService: ResultService, private cdr: ChangeDetectorRef) {
+  constructor(private resultStore: ResultStore, private cdr: ChangeDetectorRef) {
     this.results = [];
     this.result = null;
   }
 
   ngOnInit() {
-    this.resultService.get().then((value) => {
+    this.resultStore.get().then((value) => {
       this.results = value;
       this.cdr.detectChanges();
     });

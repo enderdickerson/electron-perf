@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-content">
+    <div class="">
+      <h3 class="heading-3">Create new test</h3>
+      <form #newTestForm="ngForm" (ngSubmit)="submit()">
+        <div class="form-group full-width">
+          <label for="newTestUrl">URL</label>
+          <input type="text" pInputText id="newTestUrl" required [(ngModel)]="model.url" name="newTestUrl" #newTestUrl="ngModel" />
+          <div [hidden]="newTestUrl.valid || newTestUrl.pristine"
+               class="alert alert-danger">
+            URL is required
+          </div>
+        </div>
+        <div class="row-layout">
+          <div class="form-group">
+            <label for="newTestRuns">Runs</label>
+            <p-spinner id="newTestRuns" size="6" [(ngModel)]="model.runs" name="newTestRuns"></p-spinner>
+          </div>
+          <div class="form-group">
+            <p-inputSwitch id="newTestIsAngular" onLabel="Angular" offLabel="Static" [(ngModel)]="model.isAngular" name="newTestIsAngular"></p-inputSwitch>
+          </div>
+          <button type="button" class="shift-right" (click)="submit()" pButton [disabled]="!newTestForm.form.valid" label="Create"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
