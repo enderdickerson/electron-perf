@@ -12,7 +12,9 @@ export class TestToolbarComponent implements OnInit {
   address: string;
   hasPendingTests: boolean;
   @Output() onRun = new EventEmitter();
+  @Output() onRunSelected = new EventEmitter();
   @Input() pending: Subject<boolean>;
+  @Input() selectedTests: string[] = [];
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -29,6 +31,10 @@ export class TestToolbarComponent implements OnInit {
   }
 
   run() {
-    this.onRun.emit(this.address);
+    this.onRun.emit();
+  }
+
+  runSelected() {
+    this.onRunSelected.emit();
   }
 }

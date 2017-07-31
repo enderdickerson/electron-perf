@@ -1,12 +1,13 @@
 <div class="content-view">
   <div class="scroll-this">
     <div class="content">
-      <app-test-toolbar [pending]="runningTests" (onRun)="onRun($event)"></app-test-toolbar>
+      <app-test-toolbar [pending]="runningTests" [selectedTests]="selectedTests" (onRun)="onRun()"
+                        (onRunSelected)="onRunSelected()"></app-test-toolbar>
       <app-new-test-form (onSubmit)="handleSubmit($event)"></app-new-test-form>
       <div class="row-layout">
         <app-test-list class="width-30" [tests]="tests" (onSelect)="handleSelect($event)"
                        (onSelectedTests)="handleSelected($event)"></app-test-list>
-        <app-test-editor class="width-70" [test]="selectedTest"></app-test-editor>
+        <app-test-editor class="width-70" [model]="selectedTest" (onSubmit)="updateTest($event)"></app-test-editor>
       </div>
     </div>
   </div>

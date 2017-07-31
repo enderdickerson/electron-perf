@@ -3,6 +3,7 @@ import { TestService } from '../../shared/test.service';
 import { TestStore } from '../../shared/test.store';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import { Test } from './Test';
 
 @Component({
   selector: 'app-test',
@@ -13,7 +14,7 @@ import {Subject} from 'rxjs/Subject';
 export class TestComponent implements OnInit {
   tests: any;
   selectedTest: any;
-  selectedTests: string[];
+  selectedTests: string[] = [];
   runningTests: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -35,9 +36,24 @@ export class TestComponent implements OnInit {
     });
   }
 
-  onRun(url) {
-    console.log('Run this url test: ' + url);
+  onRun() {
     this.testService.runTest();
+  }
+
+  onRunSelected() {
+    console.log('Tests to run before match: ', this.selectedTests);
+    const testsToRun = this.getSelectedFromIds(this.selectedTests);
+
+    console.log('Tests to run: ', testsToRun);
+    console.log('Total count: ', testsToRun.length);
+
+    // this.testService.runTest();
+  }
+
+  private getSelectedFromIds(ids: string[]) {
+    return this.tests.filter((item) => {
+      return ids.indexOf(item.id) > -1;
+    });
   }
 
   handleSubmit(test) {
@@ -51,12 +67,23 @@ export class TestComponent implements OnInit {
   }
 
   handleSelect(test) {
-    this.selectedTest = test;
+    const asTest = new Test('', 3, true);
+    asTest.id = test.id;
+    asTest.isAngular = test.isAngular;
+    asTest.runs = test.runs;
+    asTest.url = test.url;
+
+    this.selectedTest = asTest;
     this.cdr.detectChanges();
   }
 
   handleSelected(tests) {
+    console.log('Received ', tests);
     this.selectedTests = tests;
     this.cdr.detectChanges();
+  }
+
+  updateTest(test) {
+    console.log('Update test: ', test);
   }
 }

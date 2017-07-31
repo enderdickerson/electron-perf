@@ -5,7 +5,7 @@ export class Test {
     public isAngular?: boolean,
     public id?: number
   ) {
-    this.runs = 3;
-    this.isAngular = true;
+    this.runs = this.runs || 3;
+    this.isAngular = this.isAngular !== undefined ? this.isAngular : true;
   }
 }

@@ -4,14 +4,16 @@ import {Subject} from 'rxjs/Subject';
 import {Test} from '../Test';
 
 @Component({
-  selector: 'app-new-test-form',
-  templateUrl: './newtestform.component.html',
-  styleUrls: ['./newtestform.component.sass']
+  selector: 'app-test-form',
+  templateUrl: './testform.component.html',
+  styleUrls: ['./testform.component.sass']
 })
 
-export class NewTestFormComponent {
-  model = new Test('', 3, true);
+export class TestFormComponent {
+  // model = new Test('http://google.com', 1, false);
   @Output() onSubmit = new EventEmitter();
+  @Input() model: Test;
+  @Input() name: string;
 
   constructor(
     private cdr: ChangeDetectorRef

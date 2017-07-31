@@ -16,6 +16,7 @@ export class TestListComponent {
 
   update() {
     this.cdr.detectChanges();
+    console.log('Selected from list: ', this.selectedTests);
     this.onSelectedTests.emit(this.selectedTests);
   }
 }

@@ -14,6 +14,7 @@ import {InputTextModule, ButtonModule, SpinnerModule, InputSwitchModule, Checkbo
 import { TestListComponent } from './test/testlist/testlist.component';
 import { NewTestFormComponent } from './test/newtestform/newtestform.component';
 import { TestEditorComponent } from './test/testeditor/testeditor.component';
+import { TestFormComponent } from './test/testform/testform.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import { TestEditorComponent } from './test/testeditor/testeditor.component';
       TestToolbarComponent,
       TestListComponent,
       NewTestFormComponent,
-      TestEditorComponent
+      TestEditorComponent,
+      TestFormComponent
     ],
     providers: [],
 })

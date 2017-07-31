@@ -1,10 +1,12 @@
 <div class="card">
-  <div class="card-content">
-    <h3 class="heading-3"><span class="count">{{ tests.length }} </span>Tests</h3>
-    <div *ngFor="let test of tests">
-      <p-checkbox name="group1" value="{{test._id}}" [(ngModel)]="selectedTests" (onChange)="update()"></p-checkbox>
-      <button class="btn-outline as-sidenav" pButton type="button"
-              label="{{test.url.substr(0,25)}}{{test.url.length > 25 ? '...' : ''}}" (click)="onSelect.emit(test)"></button>
+  <div class="card-content list-content">
+    <h3 class="heading-3"><span class="count">{{ tests.length }} </span>Tests <span *ngIf="selectedTests.length > 0">({{selectedTests.length}} selected)</span></h3>
+    <div class="inner-content">
+      <div *ngFor="let test of tests">
+        <p-checkbox name="group1" value="{{test._id}}" [(ngModel)]="selectedTests" (onChange)="update()"></p-checkbox>
+        <button class="btn-outline as-sidenav" pButton type="button"
+                label="{{test.url.substr(0,25)}}{{test.url.length > 25 ? '...' : ''}}" (click)="onSelect.emit(test)"></button>
+      </div>
     </div>
   </div>
 </div>

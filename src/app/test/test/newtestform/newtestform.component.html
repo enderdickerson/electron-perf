@@ -19,9 +19,10 @@
           <div class="form-group">
             <p-inputSwitch id="newTestIsAngular" onLabel="Angular" offLabel="Static" [(ngModel)]="model.isAngular" name="newTestIsAngular"></p-inputSwitch>
           </div>
-          <button type="button" class="shift-right" (click)="submit()" pButton [disabled]="!newTestForm.form.valid" label="Create"></button>
+          <button type="button" class="shift-right" (click)="submit()" pButton [disabled]="!newTestForm.form.valid" label="Save"></button>
         </div>
       </form>
+
     </div>
   </div>
 </div>
