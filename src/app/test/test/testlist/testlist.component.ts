@@ -1,4 +1,5 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectorRef, OnChanges} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectorRef, OnChanges, OnInit} from '@angular/core';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-test-list',
@@ -6,21 +7,32 @@ import {Component, Input, Output, EventEmitter, ChangeDetectorRef, OnChanges} fr
   styleUrls: ['./testlist.component.sass']
 })
 
-export class TestListComponent implements OnChanges {
+export class TestListComponent implements OnInit {
   selectedTests: string[] = [];
-  @Input() tests;
+  testOptions: any = [];
+  @Input() tests: Subject<any>;
   @Input() selected;
   @Output() onSelect = new EventEmitter();
   @Output() onSelectedTests = new EventEmitter();
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  ngOnChanges(values) {
-    console.log('Values: ', values);
-    if (values.selected) {
-      this.modifySelected(values.selected.currentValue);
-    }
+  ngOnInit() {
+    this.tests.subscribe((value) => {
+      console.log('TEST LIST: ', value);
+      this.testOptions = value;
+      this.selectedTests = [];
+      this.onSelectedTests.emit(this.selectedTests);
+      this.cdr.detectChanges();
+    });
   }
+
+  // ngOnChanges(values) {
+  //   console.log('Values: ', values);
+  //   if (values.selected) {
+  //     this.modifySelected(values.selected.currentValue);
+  //   }
+  // }
 
   update() {
     this.cdr.detectChanges();
@@ -28,23 +40,10 @@ export class TestListComponent implements OnChanges {
     this.onSelectedTests.emit(this.selectedTests);
   }
 
-  private modifySelected(changedTests) {
-    console.log('Changed tests: ', changedTests);
-
-    if (changedTests.length === 0) {
-      this.selectedTests = [];
-    }
-
-    // this.selectedTests = this.selectedTests.filter((item) => {
-    //   return changedTests.indexOf(item) > -1;
-    // });
-    this.cdr.detectChanges();
-  }
-
   // private modifySelected(changedTests) {
-  //   this.selectedTests = this.selectedTests.filter((item) => {
-  //     return changedTests.indexOf(item) > -1;
-  //   });
+  //   if (changedTests.length === 0) {
+  //     this.selectedTests = [];
+  //   }
   //   this.cdr.detectChanges();
   // }
 }

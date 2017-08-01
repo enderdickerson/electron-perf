@@ -3,6 +3,7 @@ export class Test {
     public url: string,
     public runs: number,
     public isAngular?: boolean,
+    public wait?: number,
     public id?: string
   ) {
     this.runs = this.runs || 3;

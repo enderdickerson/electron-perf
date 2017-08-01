@@ -10,10 +10,14 @@ import { TestToolbarComponent } from './test/testtoolbar/testtoolbar.component';
 
 import { SharedModule } from '../shared/shared.module';
 
-import {InputTextModule, ButtonModule, SpinnerModule, InputSwitchModule, CheckboxModule} from 'primeng/primeng';
+import {
+  InputTextModule, ButtonModule, SpinnerModule, InputSwitchModule, CheckboxModule,
+  DropdownModule
+} from 'primeng/primeng';
 import { TestListComponent } from './test/testlist/testlist.component';
 import { NewTestFormComponent } from './test/newtestform/newtestform.component';
 import { TestEditorComponent } from './test/testeditor/testeditor.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -26,7 +30,9 @@ import { TestEditorComponent } from './test/testeditor/testeditor.component';
       SpinnerModule,
       InputSwitchModule,
       CheckboxModule,
-      SharedModule
+      DropdownModule,
+      SharedModule,
+      BrowserAnimationsModule
     ],
     exports: [],
     declarations: [

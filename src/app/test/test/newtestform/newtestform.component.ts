@@ -1,6 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import {Component, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {Test} from '../Test';
 
 @Component({
@@ -11,7 +9,6 @@ import {Test} from '../Test';
 
 export class NewTestFormComponent {
   model: Test;
-  newTestForm;
   @Output() onSubmit = new EventEmitter();
 
   constructor(
@@ -27,8 +24,6 @@ export class NewTestFormComponent {
   submit() {
     this.onSubmit.emit(this.model);
     this.clear();
-    // this.newTestForm.reset();
-    // this.newTestForm.resetForm();
     this.cdr.detectChanges();
   }
 }

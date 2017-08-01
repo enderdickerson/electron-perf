@@ -69,6 +69,7 @@ export class TestStore {
       test.url = testData.url;
       test.isAngular = testData.isAngular;
       test.runs = testData.runs;
+      test.wait = testData.wait;
 
       test.save((err2) => {
         if (err2) {

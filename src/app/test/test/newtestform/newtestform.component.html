@@ -14,8 +14,12 @@
         <div class="row-layout">
           <div class="form-group">
             <label for="newTestRuns">Runs</label>
-            <!--<p-spinner id="newTestRuns" size="6" [(ngModel)]="model.runs" name="newTestRuns"></p-spinner>-->
             <input type="number" id="newTestRuns" pInputText [(ngModel)]="model.runs" name="newTestRuns" />
+          </div>
+          <div class="form-group">
+            <label for="newTestWait">Wait</label>
+            <input type="number" id="newTestWait" pInputText [(ngModel)]="model.wait" name="newTestWait" />
+            <span>s</span>
           </div>
           <div class="form-group">
             <p-inputSwitch id="newTestIsAngular" onLabel="Angular" offLabel="Static" [(ngModel)]="model.isAngular" name="newTestIsAngular"></p-inputSwitch>

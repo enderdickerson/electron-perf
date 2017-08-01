@@ -1,4 +1,8 @@
 <div class="test-toolbar">
   <button (click)="run()" pButton type="button" [disabled]="hasPendingTests" label="Run full suite"></button>
   <button (click)="runSelected()" *ngIf="selectedTests.length > 0" pButton type="button" [disabled]="hasPendingTests" label="Run selected"></button>
+  <div class="env-runner">
+    <p-dropdown [options]="envs" [(ngModel)]="env" autoWidth="false"></p-dropdown>
+    <button (click)="runEnv()" pButton type="button" [disabled]="hasPendingTests || !env" label="Run for host"></button>
+  </div>
 </div>

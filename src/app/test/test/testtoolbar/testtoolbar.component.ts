@@ -9,12 +9,15 @@ import {Subject} from 'rxjs/Subject';
 })
 
 export class TestToolbarComponent implements OnInit {
-  address: string;
   hasPendingTests: boolean;
+  env: string;
+  envs: any;
   @Output() onRun = new EventEmitter();
   @Output() onRunSelected = new EventEmitter();
+  @Output() onRunEnv = new EventEmitter();
   @Input() pending: Subject<boolean>;
   @Input() selectedTests: string[] = [];
+  @Input() environments: Subject<any>;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -28,6 +31,12 @@ export class TestToolbarComponent implements OnInit {
       console.log('value changed again: ', value);
       this.cdr.detectChanges();
     });
+
+    this.environments.subscribe((value) => {
+      this.envs = value;
+      console.log('Envs changed', value);
+      this.cdr.detectChanges();
+    });
   }
 
   run() {
@@ -36,5 +45,9 @@ export class TestToolbarComponent implements OnInit {
 
   runSelected() {
     this.onRunSelected.emit();
+  }
+
+  runEnv() {
+    this.onRunEnv.emit(this.env);
   }
 }
