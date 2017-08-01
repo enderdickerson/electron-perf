@@ -10,14 +10,25 @@ import {Test} from '../Test';
 })
 
 export class NewTestFormComponent {
-  model = new Test('', 3, true);
+  model: Test;
+  newTestForm;
   @Output() onSubmit = new EventEmitter();
 
   constructor(
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.clear();
+  }
+
+  private clear() {
+    this.model = new Test('', 3, true);
+  }
 
   submit() {
     this.onSubmit.emit(this.model);
+    this.clear();
+    // this.newTestForm.reset();
+    // this.newTestForm.resetForm();
+    this.cdr.detectChanges();
   }
 }

@@ -30,16 +30,35 @@ export class TestStore {
     });
   }
 
+  remove(testData) {
+    const Test = this.db.mongoose.model('Test');
+
+    const deferred = q.defer();
+
+    Test.remove({_id: testData.id}, (err) => {
+      if (err) {
+        console.log('error: ', err);
+        return;
+      }
+
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  }
+
+  // TODO save by id not url
   save(testData) {
     const Test = this.db.mongoose.model('Test');
 
-    const query = Test.findOne({'url': testData.url});
+    const query = Test.findOne({'_id': testData.id});
 
     const deferred = q.defer();
 
     query.exec((err, test) => {
       if (err) {
         console.log('error: ', err);
+        deferred.reject(err);
         return;
       }
 

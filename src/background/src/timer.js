@@ -12,7 +12,7 @@ function getTimed(arr, deferred, repeat) {
   let timed = new NanoTimer();
 
   timed.time(function(callback) {
-    if (process.env.USE_ANGULAR !== 'false') {
+    if (arr.isAngular !== false && arr.isAngular !== undefined) {
       browser.waitForAngular().then(function() {
         callback();
       });

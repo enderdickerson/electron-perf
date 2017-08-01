@@ -3,7 +3,8 @@ let mongoose = require('mongoose');
 const TestSchema = new mongoose.Schema({
   url: String,
   wait: Number,
-  runs: Number
+  runs: Number,
+  isAngular: { type: Boolean, default: true }
 });
 
 mongoose.model('Test', TestSchema);

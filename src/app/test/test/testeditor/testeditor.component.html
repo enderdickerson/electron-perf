@@ -1,7 +1,7 @@
 <div class="card" *ngIf="model">
   <div class="card-content">
     <div class="">
-      <h3 class="heading-3">Edit test</h3>
+      <h3 class="heading-3">Edit test<span class="delete-btn"><i class="material-icons" (click)="remove()">delete</i></span></h3>
       <form #editTestForm="ngForm" (ngSubmit)="submit()">
         <div class="form-group full-width">
           <label for="editTestUrl">URL</label>
@@ -14,10 +14,12 @@
         <div class="row-layout">
           <div class="form-group">
             <label for="editTestRuns">Runs</label>
-            <p-spinner id="editTestRuns" size="6" [(ngModel)]="model.runs" name="editTestRuns"></p-spinner>
+            <!--<p-spinner id="editTestRuns" size="6" [min]="0" [max]="6" (onChange)="onChange()"-->
+                       <!--[(ngModel)]="model.runs" name="editTestRuns"></p-spinner>-->
+            <input type="number" pInputText id="editTestRuns" [(ngModel)]="model.runs" name="editTestRuns" #editTestRuns="ngModel"/>
           </div>
           <div class="form-group">
-            <p-inputSwitch id="editTestIsAngular" onLabel="Angular" offLabel="Static" [(ngModel)]="model.isAngular" name="editTestIsAngular"></p-inputSwitch>
+            <p-inputSwitch id="editTestIsAngular" (onChange)="onChange()" onLabel="Angular" offLabel="Static" [(ngModel)]="model.isAngular" name="editTestIsAngular"></p-inputSwitch>
           </div>
           <button type="button" class="shift-right" (click)="submit()" pButton [disabled]="!editTestForm.form.valid" label="Save"></button>
         </div>

@@ -37,7 +37,7 @@ export class TestComponent implements OnInit {
   }
 
   onRun() {
-    this.testService.runTest();
+    this.testService.runTest(this.tests);
   }
 
   onRunSelected() {
@@ -47,7 +47,7 @@ export class TestComponent implements OnInit {
     console.log('Tests to run: ', testsToRun);
     console.log('Total count: ', testsToRun.length);
 
-    // this.testService.runTest();
+    this.testService.runTest(testsToRun);
   }
 
   private getSelectedFromIds(ids: string[]) {
@@ -67,23 +67,35 @@ export class TestComponent implements OnInit {
   }
 
   handleSelect(test) {
-    const asTest = new Test('', 3, true);
-    asTest.id = test.id;
-    asTest.isAngular = test.isAngular;
-    asTest.runs = test.runs;
-    asTest.url = test.url;
-
-    this.selectedTest = asTest;
+    this.selectedTest = undefined;
+    this.cdr.detectChanges();
+    this.selectedTest = test;
     this.cdr.detectChanges();
   }
 
   handleSelected(tests) {
-    console.log('Received ', tests);
+    console.log('Selected tests: ', this.selectedTests);
     this.selectedTests = tests;
     this.cdr.detectChanges();
   }
 
   updateTest(test) {
-    console.log('Update test: ', test);
+    this.testStore.save(test).then(() => {
+      this.testStore.get().then((tests) => {
+        this.tests = tests;
+        this.cdr.detectChanges();
+      });
+    });
+  }
+
+  handleRemove(test) {
+    this.testStore.remove(test).then(() => {
+      this.testStore.get().then((tests) => {
+        this.tests = tests;
+        this.selectedTest = undefined;
+        this.selectedTests = [];
+        this.cdr.detectChanges();
+      });
+    });
   }
 }

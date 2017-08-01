@@ -32,7 +32,7 @@ export class TestService {
 
     const start = [];
 
-    for (let i = 0; i < this.maxThreads; i++) {
+    for (let i = 0; i < threads; i++) {
       start.push([]);
     }
 
@@ -47,31 +47,7 @@ export class TestService {
     }, start);
   }
 
-  runTest() {
-    const test = [
-      {
-        url: 'https://material.angularjs.org/latest/'
-      },
-      {
-        url: 'https://material.angularjs.org/latest/getting-started'
-      },
-      {
-        url: 'https://material.angularjs.org/latest/demo/autocomplete'
-      },
-      {
-        url: 'https://material.angularjs.org/latest/demo/checkbox'
-      },
-      {
-        url: 'https://material.angularjs.org/latest/demo/fabToolbar'
-      },
-      {
-        url: 'https://material.angularjs.org/latest/demo/menu'
-      },
-      {
-        url: 'https://material.angularjs.org/latest/demo/navBar'
-      }
-    ];
-
+  runTest(test: any) {
     const groups = this.splitIntoGroups(test);
 
     const win = this.winService;
@@ -80,18 +56,21 @@ export class TestService {
     console.log('Setting pending to true');
 
     let count = this.count;
+    let threads = this.maxThreads;
+
+    if (test.length < this.maxThreads) {
+      threads = test.length;
+    }
 
     const pendingTests = this.pendingTests;
-    const maxThreads = this.maxThreads;
 
     groups.forEach(function(tests) {
       const fork = win.nativeWindow.child_process.fork('./src/background/runtest.js');
 
       fork.on('message', (result) => {
-        console.log('result: ', result);
         count++;
 
-        if (count >= maxThreads) {
+        if (count >= threads) {
           pendingTests.next(false);
           count = 0;
           console.log('Setting pending to false');

@@ -2,8 +2,6 @@ import {
   Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef, ViewChild,
   AfterViewInit, OnChanges
 } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
 import {Test} from '../Test';
 
 @Component({
@@ -15,24 +13,26 @@ import {Test} from '../Test';
 export class TestEditorComponent implements OnChanges{
   @Input() model: Test;
   @Output() onSubmit = new EventEmitter();
-
-  // @ViewChild('editTestForm') form;
+  @Output() onRemove = new EventEmitter();
 
   constructor(
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnChanges(changes: any) {
+    console.log('changes: ', changes);
+    this.cdr.detectChanges();
+  }
 
-    this.doSomething(changes);
-
+  onChange() {
+    this.cdr.detectChanges();
   }
 
   submit() {
     this.onSubmit.emit(this.model);
   }
 
-  doSomething(values) {
-    console.log('Values: ', values);
+  remove() {
+    this.onRemove.emit(this.model);
   }
 }

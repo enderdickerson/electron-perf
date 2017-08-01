@@ -11,7 +11,7 @@ require('electron-reload')(__dirname);
 let win = null;
 
 app.on('ready', () => {
-  win = new BrowserWindow({width: 1200, height: 600, frame: false});
+  win = new BrowserWindow({width: 1200, height: 800, frame: false});
 
   process.env.USE_ANGULAR = args.angular !== 'false';
 

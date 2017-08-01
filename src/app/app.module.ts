@@ -7,6 +7,7 @@ import { SiteNavModule } from './sitenav/sitenav.module';
 import { TestModule } from './test/test.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultsModule } from './results/results.module';
+import { ToolbarModule } from './toolbar/toolbar.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ResultsModule } from './results/results.module';
     SiteNavModule,
     ResultsModule,
     TestModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ToolbarModule
   ],
   providers: [
   ],

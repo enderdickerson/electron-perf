@@ -2,7 +2,7 @@
   <div class="card-content">
     <div class="">
       <h3 class="heading-3">Create new test</h3>
-      <form #newTestForm="ngForm" (ngSubmit)="submit()">
+      <form #newTestForm="ngForm" (ngSubmit)="submit(); newTestForm.resetForm();">
         <div class="form-group full-width">
           <label for="newTestUrl">URL</label>
           <input type="text" pInputText id="newTestUrl" required [(ngModel)]="model.url" name="newTestUrl" #newTestUrl="ngModel" />
@@ -14,7 +14,8 @@
         <div class="row-layout">
           <div class="form-group">
             <label for="newTestRuns">Runs</label>
-            <p-spinner id="newTestRuns" size="6" [(ngModel)]="model.runs" name="newTestRuns"></p-spinner>
+            <!--<p-spinner id="newTestRuns" size="6" [(ngModel)]="model.runs" name="newTestRuns"></p-spinner>-->
+            <input type="number" id="newTestRuns" pInputText [(ngModel)]="model.runs" name="newTestRuns" />
           </div>
           <div class="form-group">
             <p-inputSwitch id="newTestIsAngular" onLabel="Angular" offLabel="Static" [(ngModel)]="model.isAngular" name="newTestIsAngular"></p-inputSwitch>

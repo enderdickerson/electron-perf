@@ -6,8 +6,9 @@
       <app-new-test-form (onSubmit)="handleSubmit($event)"></app-new-test-form>
       <div class="row-layout">
         <app-test-list class="width-30" [tests]="tests" (onSelect)="handleSelect($event)"
-                       (onSelectedTests)="handleSelected($event)"></app-test-list>
-        <app-test-editor class="width-70" [model]="selectedTest" (onSubmit)="updateTest($event)"></app-test-editor>
+                       (onSelectedTests)="handleSelected($event)" [selected]="selectedTests"></app-test-list>
+        <app-test-editor class="width-70" [model]="selectedTest" (onSubmit)="updateTest($event)"
+                         (onRemove)="handleRemove($event)"></app-test-editor>
       </div>
     </div>
   </div>
