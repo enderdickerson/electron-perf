@@ -17,6 +17,7 @@ function getTimed(arr, deferred, repeat) {
         callback();
       });
     } else {
+      browser.ignoreSynchronization = true;
       callback();
     }
   }, '', 's', function(elapsed) {
