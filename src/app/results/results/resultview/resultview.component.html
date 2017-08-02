@@ -2,13 +2,24 @@
   <div class="scroll-this">
     <div class="main">
       <div class="main-info card" *ngIf="result">
-        <h3>{{result.name}}</h3>
-        <p>Results</p>
-        <ul>
-          <li *ngFor="let run of result.results">{{run.elapsed + 's'}} - {{run.host}}</li>
-        </ul>
+        <h4 class="heading-4">{{result.name}}</h4>
 
-        <p-chart type="line" [data]="data"></p-chart>
+        <p-chart type="scatter" [data]="data"></p-chart>
+
+        <p class="subtitle-1">Results</p>
+        <div class="scroll-box">
+          <!--<button *ngFor="let run of result.results" class="btn-outline as-sidenav" pButton type="button"-->
+                  <!--(click)="ignoreResult(run)" label="">-->
+          <!--</button>-->
+
+          <div class="btn-outline" *ngFor="let run of result.results" (click)="ignoreResult(run)">
+            <span class="elapsed-time">{{run.elapsed | number}}</span> {{run.host}} <span class="timestamp" title="{{asTime(run.endTime)}}">{{fromTime(run.endTime)}}</span>
+          </div>
+
+          <!--<ul>-->
+            <!--<li *ngFor="let run of result.results">{{run.elapsed | number}} - {{run.host}}</li>-->
+          <!--</ul>-->
+        </div>
       </div>
     </div>
   </div>

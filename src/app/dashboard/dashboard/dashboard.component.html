@@ -1,8 +1,13 @@
-<div class="row-layout">
-  <app-run-date [lastRunDate]="lastRunDate"></app-run-date>
-  <app-test-count [count]="testCount"></app-test-count>
-  <!--<app-percentage-change-graph [data]="results"></app-percentage-change-graph>-->
+<div class="content-view">
+  <div class="scroll-this">
+    <div class="content">
+      <div class="row-layout">
+        <app-run-date [lastRunDate]="lastRunDate"></app-run-date>
+        <app-test-count [count]="testCount"></app-test-count>
+        <!--<app-percentage-change-graph [data]="results"></app-percentage-change-graph>-->
+      </div>
+      <app-page-per-environment [data]="chart" (changeChart)="handleChartChange($event)" [chartType]="chartType"
+                                [chartTitle]="chartTitle"></app-page-per-environment>
+    </div>
+  </div>
 </div>
-<app-page-per-environment [data]="chart" (changeChart)="handleChartChange($event)" [chartType]="chartType"
-                          [chartTitle]="chartTitle"></app-page-per-environment>
-
