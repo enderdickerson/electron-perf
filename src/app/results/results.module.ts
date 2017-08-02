@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
-import { ButtonModule } from 'primeng/primeng';
+import {ButtonModule, ChartModule} from 'primeng/primeng';
 
 // Custom imports
 import { ResultsComponent } from './results/results.component';
@@ -21,7 +21,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     ResultsRoutingModule,
     ButtonModule,
-    SharedModule
+    SharedModule,
+    ChartModule
   ],
   exports: [
     ResultsComponent,
