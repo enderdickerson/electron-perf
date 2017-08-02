@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
-import { ButtonModule } from 'primeng/primeng';
+import {ButtonModule, ChartModule} from 'primeng/primeng';
 
 // Custom imports
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -13,6 +13,8 @@ import { RunDateComponent } from './dashboard/rundate/rundate.component';
 
 import { SharedModule } from '../shared/shared.module';
 import { PercentageChangeGraphComponent } from './dashboard/percentagechangegraph/percentagechangegraph.component';
+import { PagePerEnvironmentComponent } from './dashboard/pageperenvironment/pageperenvironment.component';
+import { TestCountComponent } from './dashboard/testcount/testcount.component';
 
 @NgModule({
     imports: [
@@ -21,6 +23,7 @@ import { PercentageChangeGraphComponent } from './dashboard/percentagechangegrap
       CommonModule,
       DashboardRoutingModule,
       ButtonModule,
+      ChartModule,
       SharedModule
     ],
     exports: [
@@ -29,7 +32,9 @@ import { PercentageChangeGraphComponent } from './dashboard/percentagechangegrap
     declarations: [
       DashboardComponent,
       RunDateComponent,
-      PercentageChangeGraphComponent
+      PercentageChangeGraphComponent,
+      PagePerEnvironmentComponent,
+      TestCountComponent
     ],
     providers: [],
 })

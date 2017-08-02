@@ -1,2 +1,6 @@
-<app-run-date [lastRunDate]="lastRunDate"></app-run-date>
-<app-percentage-change-graph [data]="results"></app-percentage-change-graph>
+<div class="row-layout">
+  <app-run-date [lastRunDate]="lastRunDate"></app-run-date>
+  <app-test-count [count]="testCount"></app-test-count>
+  <!--<app-percentage-change-graph [data]="results"></app-percentage-change-graph>-->
+</div>
+<app-page-per-environment [data]="pagePerEnvironment"></app-page-per-environment>

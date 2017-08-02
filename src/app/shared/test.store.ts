@@ -47,7 +47,18 @@ export class TestStore {
     return deferred.promise;
   }
 
-  // TODO save by id not url
+  getCount() {
+    const Test = this.db.mongoose.model('Test');
+
+    const deferred = q.defer();
+
+    Test.count({}, (err, c) => {
+      deferred.resolve(c);
+    });
+
+    return deferred.promise;
+  }
+
   save(testData) {
     const Test = this.db.mongoose.model('Test');
 

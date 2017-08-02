@@ -25,6 +25,7 @@
         "styles.sass"
       ],
       "scripts": [
+        "../node_modules/chart.js/dist/Chart.js",
         "./includes.js"
       ],
       "environmentSource": "environments/environment.ts",

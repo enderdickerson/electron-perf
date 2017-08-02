@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ResultStore } from '../../shared/result.store';
-import * as moment from 'moment';
+import {TestStore} from "../../shared/test.store";
+const moment = window.require('moment');
+const colors = window.require('nice-color-palettes');
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +13,12 @@ import * as moment from 'moment';
 export class DashboardComponent implements OnInit {
   lastRunDate: any;
   results: [any];
+  pagePerEnvironment: any;
+  testCount: any;
 
-  constructor(private resultStore: ResultStore, private cdr: ChangeDetectorRef) {}
+  constructor(private resultStore: ResultStore,
+              private testStore: TestStore,
+              private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.resultStore.get().then((results: [any]) => {
@@ -23,22 +29,126 @@ export class DashboardComponent implements OnInit {
       this.getRunDate();
       this.getEnvironmentTiming();
     });
+
+    this.testStore.getCount().then((count) => {
+      this.testCount = count;
+      console.log('Count: ', count);
+    });
   }
 
   private getRunDate() {
-    const runDate = this.results[0].results[0].endTime;
+    const runDate = this.results.map((item) => {
+      return item.results;
+    }).reduce((arr, item) => {
+      arr = arr.concat(item);
+      return arr;
+    }, []);
 
-    this.lastRunDate = {
-      date: moment(runDate).format('MM/DD/YY'),
-      time: moment(runDate).format('HH:MM')
-    };
+    runDate.sort((a, b) => {
+      const endA = a.endTime;
+      const endB = b.endTime;
+
+      return endB - endA;
+    });
+
+    if (runDate.length === 0) {
+      this.lastRunDate = undefined;
+    } else {
+      this.lastRunDate = {
+        date: moment(runDate[0].endTime).format('MM/DD/YY'),
+        time: moment(runDate[0].endTime).format('HH:MM')
+      };
+    }
 
     this.cdr.detectChanges();
   }
 
   private getEnvironmentTiming() {
-    let timings = this.results.reduce((all, item) => {
-      return all.concat(item.results);
+    // const timings = this.results.map((item) => {
+    //   return item.results.map((result) => {
+    //     result.path = item.name;
+    //   });
+    // }).reduce((arr, item) => {
+    //   arr = arr.concat(item);
+    //   return arr;
+    // }, []);
+    //
+    // const withHost = timings.reduce((arr, item) => {
+    //   if (arr[item.host])
+    // }, {});
+
+    /*
+      [{ label: HOST,
+        data: [AVERAGE, AVERAGE, AVERAGE] - Zero where does not apply
+      }]
+
+     */
+
+    const reportNames = this.results.map((item) => {
+      return item.name;
     });
+
+    const resultArrays = this.results.map((report) => {
+      return report.results;
+    });
+
+    const resultsFlat = resultArrays.reduce((arr, item) => {
+      arr = arr.concat(item);
+      return arr;
+    }, []);
+
+    const environments = resultsFlat.map((item) => {
+      return item.host;
+    }).filter((item, index, arr) => {
+      return arr.indexOf(item) === index;
+    });
+
+    const colorSet = colors[0].concat(colors[1]).concat(colors[2]);
+
+    const dataSets = environments.map((item, envIndex) => {
+      return {
+        label: item,
+        backgroundColor: colorSet[envIndex],
+        data: this.results
+          .reduce((arr, report, index) => {
+            const relevant = report.results.filter((result) => {
+              return result.host === item;
+            });
+
+            relevant.sort((a, b) => {
+              return b.endTime - a.endTime;
+            });
+
+            if (relevant.length) {
+              const recent = relevant[0];
+
+              const lastSampleDate = moment(recent.endTime).subtract(1, 'hours');
+
+              const sameHour = relevant.filter((result) => {
+                return moment(result.endTime).isAfter(lastSampleDate);
+              });
+
+              arr[index] = (sameHour.reduce((avg, res) => {
+                return avg + isNaN(res.elapsed) ? 0 : parseFloat(res.elapsed);
+              }, 0) / sameHour.length).toFixed(2);
+            } else {
+              arr[index] = 0;
+            }
+
+            return arr;
+          }, Array(reportNames.length).fill(0))
+      };
+    });
+
+    const graph = {
+      labels: reportNames,
+      datasets: dataSets
+    };
+
+    console.log('Graph obj', dataSets);
+
+    this.pagePerEnvironment = graph;
+
+    this.cdr.detectChanges();
   }
 }

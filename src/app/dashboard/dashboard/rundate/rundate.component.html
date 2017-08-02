@@ -1,7 +1,13 @@
 <div class="card">
-  <div class="card-content" *ngIf="lastRunDate">
-    <h2>{{lastRunDate.date}}</h2>
-    <h4>{{lastRunDate.time}}</h4>
-    <p class="de-emphasized">Last test run</p>
+  <div class="card-content">
+    <div *ngIf="lastRunDate; else runTest">
+      <h2>{{lastRunDate.date}}</h2>
+      <h4>{{lastRunDate.time}}</h4>
+      <p class="de-emphasized">Last test run</p>
+    </div>
+    <ng-template #runTest>
+      <h2>Never ran</h2>
+      <p class="de-emphasized">Last test run</p>
+    </ng-template>
   </div>
 </div>
