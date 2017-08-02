@@ -1,0 +1,39 @@
+$gray-white: #EFEFF0
+$base-color: lighten($gray-white, 5%)
+$bright-blue: #0567D6
+$black-hint: rgba(0,0,0,0.12)
+$text-primary: rgba(0,0,0,0.84)
+$accent: $bright-blue
+
+.card .card-content
+  padding-top: 0
+
+.ui-button.btn-outline-tab
+  background: transparent
+  height: 48px
+  color: $text-primary
+  border-color: $black-hint
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+  border-top: none
+  &:enabled:hover
+    background-color: darken($base-color, 5%)
+    border-color: $black-hint
+    color: $text-primary
+    border-top: none
+    outline: none
+    background: darken($base-color, 5%)
+  &.active
+    border-bottom: 4px solid $accent
+
+h4.heading-4
+  font-size: 24px
+  font-weight: 300
+  margin-bottom: 0
+  margin-top: 16px
+
+::ng-deep [ng-reflect-type='doughnut'] canvas
+  max-width: 500px
+  max-height: 500px
+  margin-left: auto
+  margin-right: auto

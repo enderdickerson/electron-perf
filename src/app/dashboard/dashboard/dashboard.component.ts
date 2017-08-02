@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ResultStore } from '../../shared/result.store';
 import {TestStore} from "../../shared/test.store";
+import {Subject} from "rxjs/Subject";
 const moment = window.require('moment');
 const colors = window.require('nice-color-palettes');
 
@@ -11,10 +12,13 @@ const colors = window.require('nice-color-palettes');
 })
 
 export class DashboardComponent implements OnInit {
+  currentChart: string;
   lastRunDate: any;
   results: [any];
-  pagePerEnvironment: any;
+  chart: any;
   testCount: any;
+  chartType: Subject<string> = new Subject<string>();
+  chartTitle: Subject<string> = new Subject<string>();
 
   constructor(private resultStore: ResultStore,
               private testStore: TestStore,
@@ -34,6 +38,10 @@ export class DashboardComponent implements OnInit {
       this.testCount = count;
       console.log('Count: ', count);
     });
+
+    this.chartType.next('bar');
+    this.chartTitle.next('Page Speed Per Environment');
+    this.currentChart = 'environment';
   }
 
   private getRunDate() {
@@ -147,8 +155,46 @@ export class DashboardComponent implements OnInit {
 
     console.log('Graph obj', dataSets);
 
-    this.pagePerEnvironment = graph;
+    this.chart = graph;
 
     this.cdr.detectChanges();
+  }
+
+  getHeatMap() {
+    const colorSet = colors[0].concat(colors[1]).concat(colors[2]);
+
+    const graph = {
+      labels: ['A', 'B', 'C'],
+      datasets: [
+        {
+          data: [300, 50, 100],
+          backgroundColor: colorSet
+        }
+      ]
+    };
+
+    this.chart = graph;
+    this.cdr.detectChanges();
+  }
+
+  handleChartChange(chart) {
+    if (chart === this.currentChart) {
+      return;
+    }
+
+    switch (chart) {
+      case 'environment':
+        this.currentChart = 'environment';
+        this.chartType.next('bar');
+        this.chartTitle.next('Page Speed Per Environment');
+        this.getEnvironmentTiming();
+        break;
+      case 'heatmap':
+        this.currentChart = 'heatmap';
+        this.chartType.next('doughnut');
+        this.chartTitle.next('Slowest Pages Heatmap');
+        this.getHeatMap();
+        break;
+    }
   }
 }

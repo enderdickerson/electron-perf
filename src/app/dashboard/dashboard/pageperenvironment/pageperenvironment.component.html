@@ -1,5 +1,11 @@
 <div class="card">
   <div class="card-content">
-    <p-chart type="bar" [data]="data"></p-chart>
+    <div>
+      <button  pButton type="button" class="btn-outline-tab" label="Environment" (click)="changeChart.emit('environment')"></button>
+      <button  pButton type="button" class="btn-outline-tab" label="Heatmap" (click)="changeChart.emit('heatmap')"></button>
+    </div>
+    <h4 class="heading-4">{{title}}</h4>
+    <p-chart type="bar" [data]="data" [options]="options" *ngIf="chartTypeRef === 'bar'"></p-chart>
+    <p-chart type="doughnut" [data]="data" *ngIf="chartTypeRef === 'doughnut'"></p-chart>
   </div>
 </div>
