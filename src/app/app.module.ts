@@ -8,6 +8,7 @@ import { TestModule } from './test/test.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultsModule } from './results/results.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
+import { ConfirmDialogModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [

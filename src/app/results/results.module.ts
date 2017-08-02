@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
-import {ButtonModule, ChartModule} from 'primeng/primeng';
+import {ButtonModule, ChartModule, ConfirmationService, ConfirmDialogModule} from 'primeng/primeng';
 
 // Custom imports
 import { ResultsComponent } from './results/results.component';
@@ -13,6 +13,7 @@ import { ResultListComponent } from './results/resultlist/resultlist.component';
 import { ResultViewComponent } from './results/resultview/resultview.component';
 
 import { SharedModule } from '../shared/shared.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { SharedModule } from '../shared/shared.module';
     ResultsRoutingModule,
     ButtonModule,
     SharedModule,
-    ChartModule
+    ChartModule,
+    BrowserAnimationsModule
   ],
   exports: [
     ResultsComponent,

@@ -27,4 +27,17 @@ export class ResultsComponent implements OnInit {
     this.result = report;
     this.cdr.detectChanges();
   }
+
+  ignoreResultRun(ignorePoint) {
+    console.log('Ignore result');
+    this.resultStore.ignoreEntry(ignorePoint.result, ignorePoint.data).then((value) => {
+      this.resultStore.get().then((results) => {
+        this.results = results;
+        this.cdr.detectChanges();
+      }).then(() => {
+        this.result = value;
+        this.cdr.detectChanges();
+      });
+    });
+  }
 }

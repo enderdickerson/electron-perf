@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef, OnChanges} from '@angular/core';
+import {ConfirmationService} from 'primeng/primeng';
 
 const moment = window.require('moment');
 const colors = window.require('nice-color-palettes');
@@ -13,45 +14,12 @@ export class ResultViewComponent implements OnChanges {
   data: any;
   options: any;
   @Input() result: any;
+  @Output() onIgnore = new EventEmitter();
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges() {
-    // this.getData();
-
-
-
-    // Datasets
-    /*
-      Create an array with length equal to
-     */
-
-
-    // this.data = {
-    //   datasets: [{
-    //     label: 'Scatter Dataset',
-    //     data: [{
-    //       x: -10,
-    //       y: 0
-    //     }, {
-    //       x: 0,
-    //       y: 10
-    //     }, {
-    //       x: 10,
-    //       y: 5
-    //     }]
-    //   }]
-    // };
-
     this.data = this.getData();
-
-    // this.options = {
-    //   scales: {
-    //     xAxes: [
-    //       {display: false}
-    //     ]
-    //   }
-    // };
   }
 
   asTime(runTime) {
@@ -60,6 +28,13 @@ export class ResultViewComponent implements OnChanges {
 
   fromTime(runTime) {
     return moment(runTime).fromNow();
+  }
+
+  selectData(point) {
+    const data = this.data.datasets[point.element._datasetIndex].data[point.element._index].id;
+
+    console.log('Point selected: ', point);
+    this.onIgnore.emit({result: this.result, data: data});
   }
 
   ignoreResult(run) {
@@ -97,7 +72,8 @@ export class ResultViewComponent implements OnChanges {
         data: item.map((res) => {
           return {
             x: moment(res.endTime).format('DDDDHHMM'),
-            y: parseFloat(res.elapsed)
+            y: parseFloat(res.elapsed),
+            id: res.id
           };
         })
       });
