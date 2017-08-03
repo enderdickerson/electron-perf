@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ResultStore } from '../../shared/result.store';
 
+import * as q from 'Q';
+
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
@@ -30,12 +32,16 @@ export class ResultsComponent implements OnInit {
 
   ignoreResultRun(ignorePoint) {
     console.log('Ignore result');
-    this.resultStore.ignoreEntry(ignorePoint.result, ignorePoint.data).then((value) => {
+    this.resultStore.toggleIgnoreEntry(ignorePoint.result, ignorePoint.data).then((value) => {
       this.resultStore.get().then((results) => {
         this.results = results;
         this.cdr.detectChanges();
-      }).then(() => {
-        this.result = value;
+
+        return q.when(this.results.filter((item) => {
+          return item.id === ignorePoint.result.id;
+        })[0]);
+      }).then((res) => {
+        this.result = res;
         this.cdr.detectChanges();
       });
     });

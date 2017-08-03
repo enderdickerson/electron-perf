@@ -1,11 +1,11 @@
 let mongoose = require('mongoose');
+const Result = require('../../app/models/resultmodel');
 
 let os = require('os');
 let URL = require('url').URL;
 
 module.exports.log = function(time, url) {
   let Report = mongoose.model('Report');
-  let Result = mongoose.model('Result');
 
   const parsedUrl = new URL(url);
 

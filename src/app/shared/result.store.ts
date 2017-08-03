@@ -18,35 +18,47 @@ export class ResultStore {
     });
   }
 
-  // Does not work see issue: https://github.com/Automattic/mongoose/issues/5480
-  ignoreEntry(originalReport, run) {
-    // const deferred = q.defer();
+  // Does not work with embedded document array see issue: https://github.com/Automattic/mongoose/issues/5480
+  toggleIgnoreEntry(originalReport, run) {
+    const deferred = q.defer();
 
-    // const Report = this.db.mongoose.model('Report');
-    //
-    // Report.findOne({_id: originalReport.id}, (err, report) => {
-    //   if (err) {
-    //     deferred.reject(err);
-    //     return;
-    //   }
-    //
-    //   const result = report.results.id(run);
-    //
-    //   result.ignore = true;
-    //
-    //   result.save((err2) => {
-    //     if (err2) {
-    //       console.log('error: ', err2);
-    //       deferred.reject(err2);
-    //       return;
-    //     }
-    //
-    //     deferred.resolve();
-    //   });
-    // });
+    const Report = this.db.mongoose.model('Report');
 
-    // return deferred.promise;
+    Report.findOne({_id: originalReport.id}, (err, report) => {
+      if (err) {
+        deferred.reject(err);
+        return;
+      }
 
-    return q.when();
+      const previousResults = report.results.map((item) => {
+        if (item.id === run) {
+          item.ignore = !item.ignore;
+        }
+        return item;
+      });
+
+      report.results = [];
+
+      report.save((err2) => {
+        if (err2) {
+          console.log('error: ', err2);
+          deferred.reject(err2);
+          return;
+        }
+
+        report.results = previousResults;
+
+        report.save((err3) => {
+          if (err3) {
+            deferred.reject(err3);
+            return;
+          }
+
+          deferred.resolve();
+        });
+      });
+    });
+
+    return deferred.promise;
   }
 }

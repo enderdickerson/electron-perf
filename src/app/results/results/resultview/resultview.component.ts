@@ -39,6 +39,7 @@ export class ResultViewComponent implements OnChanges {
 
   ignoreResult(run) {
     console.log('Ignoring result');
+    this.onIgnore.emit({result:this.result, data: run.id});
   }
 
   getData() {
@@ -48,7 +49,11 @@ export class ResultViewComponent implements OnChanges {
 
     const colorSet = colors[0].concat(colors[1]);
 
-    const environments = this.result.results.map((item) => {
+    const filtered = this.result.results.filter((result) => {
+      return result.ignore !== true;
+    });
+
+    const environments = filtered.map((item) => {
       return item.host;
     }).filter((item, index, arr) => {
       return arr.indexOf(item) === index;
@@ -56,7 +61,7 @@ export class ResultViewComponent implements OnChanges {
 
     const groupedByHost = Array.from({length: environments.length}, i => []);
 
-    this.result.results.forEach((item) => {
+    filtered.forEach((item) => {
       const index = environments.indexOf(item.host);
 
       groupedByHost[index].push(item);
