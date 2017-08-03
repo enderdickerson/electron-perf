@@ -1,9 +1,6 @@
-import {Injectable, OnInit} from '@angular/core';
-
+import {Injectable} from '@angular/core';
 import { WindowService } from './window.service';
 import { Observable } from 'rxjs/Observable';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {isBoolean} from 'util';
 import {Subject} from 'rxjs/Subject';
 
 @Injectable()
@@ -64,6 +61,10 @@ export class TestService {
 
     const pendingTests = this.pendingTests;
 
+    new Notification('Speed test started', {
+      body: 'URL Perf is now testing'
+    });
+
     groups.forEach(function(tests) {
       const fork = win.nativeWindow.child_process.fork('./src/background/runtest.js');
 
@@ -74,6 +75,13 @@ export class TestService {
           pendingTests.next(false);
           count = 0;
           console.log('Setting pending to false');
+          const finished = new Notification('Speed test finished', {
+            body: 'URL Perf has new results available'
+          });
+
+          finished.onclick = () => {
+            console.log('Notification clicked');
+          };
         }
       });
 
