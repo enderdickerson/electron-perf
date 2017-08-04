@@ -9,13 +9,18 @@ export class ResultStore {
   constructor(private db: ConnectionService) {}
 
   get() {
+    const deferred = q.defer();
+
     const Report = this.db.mongoose.model('Report');
 
-    const query = Report.find({});
+    const query = Report.find({}).sort('name');
 
-    return query.exec((err, results) => {
-      return results;
+    query.exec((err, results) => {
+      // return results;
+      deferred.resolve(results);
     });
+
+    return deferred.promise;
   }
 
   // Does not work with embedded document array see issue: https://github.com/Automattic/mongoose/issues/5480

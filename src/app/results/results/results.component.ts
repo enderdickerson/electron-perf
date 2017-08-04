@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import { ResultStore } from '../../shared/result.store';
 
 import * as q from 'Q';
@@ -9,7 +9,7 @@ import * as q from 'Q';
   styleUrls: ['results.component.sass']
 })
 
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, OnDestroy {
   results: any;
   result: any;
 
@@ -23,6 +23,10 @@ export class ResultsComponent implements OnInit {
       this.results = value;
       this.cdr.detectChanges();
     });
+  }
+
+  ngOnDestroy() {
+    this.cdr.detach();
   }
 
   selectResult(report) {

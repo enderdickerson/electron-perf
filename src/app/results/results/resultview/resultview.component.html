@@ -3,7 +3,7 @@
     <div class="main">
       <div class="main-info card" *ngIf="result">
         <h4 class="heading-4">{{result.name}}</h4>
-        <p-chart type="scatter" [data]="data" (onDataSelect)="selectData($event)"></p-chart>
+        <p-chart type="scatter" [data]="data" (onDataSelect)="selectData($event)" [options]="options"></p-chart>
         <p class="subtitle-1">Results</p>
         <div class="scroll-box">
           <div class="btn-outline" *ngFor="let run of result.results" (click)="ignoreResult(run)" [class.ignored]="run.ignore">

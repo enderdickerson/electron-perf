@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { TestService } from '../../shared/test.service';
 import { TestStore } from '../../shared/test.store';
 import { Subject } from 'rxjs/Subject';
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs/Subject';
   styleUrls: ['./test.component.sass']
 })
 
-export class TestComponent implements OnInit {
+export class TestComponent implements OnInit, OnDestroy {
   tests: any;
   selectedTest: any;
   selectedTests: string[] = [];
@@ -22,9 +22,9 @@ export class TestComponent implements OnInit {
     private testStore: TestStore,
     private cdr: ChangeDetectorRef
   ) {
-    this.testService.getPendingTests().subscribe((value) => {
-      this.runningTests.next(value);
-    });
+    // this.testService.getPendingTests().subscribe((value) => {
+    //   this.runningTests.next(value);
+    // });
     this.tests = [];
     this.testList.next([]);
   }
@@ -38,6 +38,15 @@ export class TestComponent implements OnInit {
 
       this.cdr.detectChanges();
     });
+
+    this.runningTests.next(this.testService.getPendingTests());
+  }
+
+  ngOnDestroy() {
+    this.cdr.detach();
+    this.runningTests.unsubscribe();
+    this.environments.unsubscribe();
+    this.testList.unsubscribe();
   }
 
   private getEnvs() {

@@ -1,5 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef, OnChanges} from '@angular/core';
-import {ConfirmationService} from 'primeng/primeng';
+import {Component, Input, Output, EventEmitter, ChangeDetectorRef, OnChanges, OnDestroy} from '@angular/core';
 
 const moment = window.require('moment');
 const colors = window.require('nice-color-palettes');
@@ -10,9 +9,10 @@ const colors = window.require('nice-color-palettes');
   styleUrls: ['resultview.component.sass']
 })
 
-export class ResultViewComponent implements OnChanges {
+export class ResultViewComponent implements OnChanges, OnDestroy {
   data: any;
   options: any;
+
   @Input() result: any;
   @Output() onIgnore = new EventEmitter();
 
@@ -20,6 +20,26 @@ export class ResultViewComponent implements OnChanges {
 
   ngOnChanges() {
     this.data = this.getData();
+    this.options = {
+      fill: false,
+      scales: {
+        xAxes: [
+          {display: false}
+        ]
+      },
+      tooltips: {
+        callbacks: {
+          label: (item, data) => {
+            console.log('item: ', item, data);
+            return item.yLabel.toFixed(2) + 's ' + moment(item.xLabel).fromNow();
+          }
+        }
+      },
+    };
+  }
+
+  ngOnDestroy() {
+    this.cdr.detach();
   }
 
   asTime(runTime) {
@@ -72,11 +92,13 @@ export class ResultViewComponent implements OnChanges {
     groupedByHost.forEach((item, index) => {
       asScatterPoints.push({
         label: item[0].host,
-        backgroundColor: colorSet[index],
+        fill: false,
+        // lineTension: 0,
+        cubicInterpolationMode: 'monotone',
         borderColor: colorSet[index],
         data: item.map((res) => {
           return {
-            x: moment(res.endTime).format('DDDDHHMM'),
+            x: moment(res.endTime),
             y: parseFloat(res.elapsed),
             id: res.id
           };

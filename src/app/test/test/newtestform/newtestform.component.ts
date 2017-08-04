@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {Test} from '../Test';
 
 @Component({
@@ -7,7 +7,7 @@ import {Test} from '../Test';
   styleUrls: ['./newtestform.component.sass']
 })
 
-export class NewTestFormComponent {
+export class NewTestFormComponent implements OnDestroy {
   model: Test;
   @Output() onSubmit = new EventEmitter();
 
@@ -15,6 +15,10 @@ export class NewTestFormComponent {
     private cdr: ChangeDetectorRef
   ) {
     this.clear();
+  }
+
+  ngOnDestroy() {
+    this.cdr.detach();
   }
 
   private clear() {

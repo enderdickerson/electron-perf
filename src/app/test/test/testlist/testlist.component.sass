@@ -1,8 +1,10 @@
+$bright-blue: #0567D6
+
 .card
   margin-left: 0
   margin-right: 0
-  max-width: 350px
-  min-width: 350px
+  max-width: 500px
+  min-width: 500px
 
 .count
   color: rgba(0,0,0,0.32)
@@ -26,7 +28,7 @@
       border: none
 
 .list-content
-  height: 300px
+  height: 400px
   overflow: hidden
   .inner-content
     height: 100%
@@ -35,3 +37,11 @@
 
 .scrollable
   padding-bottom: 80px
+
+.full-width
+  width: 100%
+  margin-bottom: 16px
+
+.selected
+  .ui-widget.ui-button.btn-outline.as-sidenav
+    background-color: lighten($bright-blue, 50%)

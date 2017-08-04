@@ -1,6 +1,6 @@
 import {
   Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef, ViewChild,
-  AfterViewInit, OnChanges
+  AfterViewInit, OnChanges, OnDestroy
 } from '@angular/core';
 import {Test} from '../Test';
 
@@ -10,7 +10,7 @@ import {Test} from '../Test';
   styleUrls: ['./testeditor.component.sass']
 })
 
-export class TestEditorComponent implements OnChanges{
+export class TestEditorComponent implements OnChanges, OnDestroy {
   @Input() model: Test;
   @Output() onSubmit = new EventEmitter();
   @Output() onRemove = new EventEmitter();
@@ -18,6 +18,10 @@ export class TestEditorComponent implements OnChanges{
   constructor(
     private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnDestroy() {
+    this.cdr.detach();
+  }
 
   ngOnChanges(changes: any) {
     console.log('changes: ', changes);

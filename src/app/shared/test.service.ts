@@ -8,15 +8,17 @@ import {Subject} from 'rxjs/Subject';
 export class TestService {
   count: number;
   maxThreads: number;
-  pendingTests: Subject<boolean> = new Subject<boolean>();
+  pendingTests: boolean;
+  // pendingTests: Subject<boolean> = new Subject<boolean>();
 
   constructor(private winService: WindowService) {
     this.maxThreads = 4;
     this.count = 0;
-    this.pendingTests.next(false);
+    this.pendingTests = false;
+    // this.pendingTests.next(false);
   }
 
-  public getPendingTests(): Observable<boolean> {
+  public getPendingTests() {
     return this.pendingTests;
   }
 
@@ -32,6 +34,21 @@ export class TestService {
     for (let i = 0; i < threads; i++) {
       start.push([]);
     }
+
+    original.sort((a, b) => {
+      const pathA = new URL(a.url).pathname;
+      const pathB = new URL(b.url).pathname;
+
+      if (pathB < pathA) {
+        return 1;
+      }
+
+      if (pathB > pathA) {
+        return -1;
+      }
+
+      return pathB === pathA;
+    });
 
     return original.map((x) => {
        return [x];
@@ -49,7 +66,7 @@ export class TestService {
 
     const win = this.winService;
 
-    this.pendingTests.next(true);
+    this.pendingTests = true;
     console.log('Setting pending to true');
 
     let count = this.count;
@@ -59,11 +76,11 @@ export class TestService {
       threads = test.length;
     }
 
-    const pendingTests = this.pendingTests;
-
     new Notification('Speed test started', {
       body: 'URL Perf is now testing'
     });
+
+    let self = this;
 
     groups.forEach(function(tests) {
       const fork = win.nativeWindow.child_process.fork('./src/background/runtest.js');
@@ -72,7 +89,8 @@ export class TestService {
         count++;
 
         if (count >= threads) {
-          pendingTests.next(false);
+          self.pendingTests = false;
+
           count = 0;
           console.log('Setting pending to false');
           const finished = new Notification('Speed test finished', {

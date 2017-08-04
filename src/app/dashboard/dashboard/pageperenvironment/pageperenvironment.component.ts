@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -7,16 +7,24 @@ import { Subject } from 'rxjs/Subject';
   styleUrls: ['/pageperenvironment.component.sass']
 })
 
-export class PagePerEnvironmentComponent implements OnInit {
+export class PagePerEnvironmentComponent implements OnInit, OnDestroy {
   options;
   title: string;
   chartTypeRef: string;
+
   @Input() data;
   @Output() changeChart = new EventEmitter();
+
   @Input() chartType: Subject<string>;
   @Input() chartTitle: Subject<string>;
 
   constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnDestroy() {
+    this.cdr.detach();
+    this.chartType.unsubscribe();
+    this.chartTitle.unsubscribe();
+  }
 
   ngOnInit() {
     this.chartTypeRef = 'bar';

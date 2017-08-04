@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
@@ -8,18 +8,26 @@ import {Subject} from 'rxjs/Subject';
   styleUrls: ['./testtoolbar.component.sass']
 })
 
-export class TestToolbarComponent implements OnInit {
+export class TestToolbarComponent implements OnInit, OnDestroy {
   hasPendingTests: boolean;
   env: string;
   envs: any;
+
   @Output() onRun = new EventEmitter();
   @Output() onRunSelected = new EventEmitter();
   @Output() onRunEnv = new EventEmitter();
+
   @Input() pending: Subject<boolean>;
-  @Input() selectedTests: string[] = [];
   @Input() environments: Subject<any>;
+  @Input() selectedTests: string[] = [];
 
   constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnDestroy() {
+    this.cdr.detach();
+    this.pending.unsubscribe();
+    this.environments.unsubscribe();
+  }
 
   ngOnInit() {
     this.hasPendingTests = false;

@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import { ResultStore } from '../../shared/result.store';
-import {TestStore} from "../../shared/test.store";
-import {Subject} from "rxjs/Subject";
+import {TestStore} from '../../shared/test.store';
+import {Subject} from 'rxjs/Subject';
 const moment = window.require('moment');
 const colors = window.require('nice-color-palettes');
 
@@ -11,18 +11,25 @@ const colors = window.require('nice-color-palettes');
   styleUrls: ['dashboard.component.sass']
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   currentChart: string;
   lastRunDate: any;
   results: [any];
   chart: any;
   testCount: any;
+
   chartType: Subject<string> = new Subject<string>();
   chartTitle: Subject<string> = new Subject<string>();
 
   constructor(private resultStore: ResultStore,
               private testStore: TestStore,
               private cdr: ChangeDetectorRef) {}
+
+  ngOnDestroy() {
+    this.cdr.detach();
+    this.chartType.unsubscribe();
+    this.chartTitle.unsubscribe();
+  }
 
   ngOnInit() {
     this.resultStore.get().then((results: [any]) => {
@@ -137,7 +144,7 @@ export class DashboardComponent implements OnInit {
               });
 
               arr[index] = (sameHour.reduce((avg, res) => {
-                return avg + isNaN(res.elapsed) ? 0 : parseFloat(res.elapsed);
+                return avg + (isNaN(res.elapsed) ? 0 : parseFloat(res.elapsed));
               }, 0) / sameHour.length).toFixed(2);
             } else {
               arr[index] = 0;
