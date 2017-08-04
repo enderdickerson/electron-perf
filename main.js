@@ -2,29 +2,27 @@ const {app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 let args = require('yargs');
-const config = require('./config');
+const config = require(path.join(__dirname, 'config'));
 
 require('dotenv').config();
 
-require('electron-reload')(__dirname);
+// require('electron-reload')(__dirname);
 
 let win = null;
 
 app.on('ready', () => {
   win = new BrowserWindow({width: 1200, height: 800, frame: false});
 
-  process.env.USE_ANGULAR = args.angular !== 'false';
-
-  if (process.env.PACKAGE === 'true') {
+  // if (process.env.PACKAGE === 'true') {
     win.loadURL(url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
       protocol: 'file:',
       slashes: true
     }));
-  } else {
-    win.loadURL(process.env.HOST);
+  // } else {
+  //   win.loadURL(process.env.HOST);
     win.webContents.openDevTools();
-  }
+  // }
 
   win.on('closed', function() {
     win = null;

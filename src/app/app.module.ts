@@ -20,8 +20,8 @@ import { ConfirmDialogModule } from 'primeng/primeng';
     SiteNavModule,
     ResultsModule,
     TestModule,
+    ToolbarModule,
     AppRoutingModule,
-    ToolbarModule
   ],
   providers: [
   ],

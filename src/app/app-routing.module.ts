@@ -4,15 +4,16 @@ import { NgModule } from '@angular/core';
 @NgModule({
     imports: [
       RouterModule.forRoot([
-          {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+          {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
           {path: 'dashboard', loadChildren: 'app/dashboard/dashboard.module#DashboardModule'},
           {path: 'results', loadChildren: 'app/results/results.module#ResultsModule'},
-          {path: 'test', loadChildren: 'app/test/test.module#TestModule'}
+          {path: 'test', loadChildren: 'app/test/test.module#TestModule'},
+          {path: '**', redirectTo: 'dashboard', pathMatch: 'full'},
       ], { enableTracing: true } )
     ],
     exports: [
         RouterModule
-    ]
+]
 })
 
 export class AppRoutingModule {}

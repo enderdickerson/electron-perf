@@ -10,7 +10,7 @@ declare global {
 // const mongoose = window.require('mongoose');
 // const remote = window.require('electron').remote;
 
-import * as q from 'Q';
+import * as q from 'q';
 
 import { ConnectionService } from './connection.service';
 

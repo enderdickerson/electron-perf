@@ -43,3 +43,4 @@ client.pem
 # System Files
 .DS_Store
 Thumbs.db
+app.asar

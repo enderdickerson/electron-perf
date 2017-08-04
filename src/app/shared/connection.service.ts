@@ -9,7 +9,7 @@ declare global {
 
 const mongoose = window.require('mongoose');
 const remote = window.require('electron').remote;
-const q = window.require('Q');
+const q = window.require('q');
 
 @Injectable()
 

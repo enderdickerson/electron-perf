@@ -1,8 +1,6 @@
 import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import { ResultStore } from '../../shared/result.store';
 
-import * as q from 'Q';
-
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
