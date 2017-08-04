@@ -15,14 +15,10 @@ const colors = window.require('nice-color-palettes');
   styleUrls: ['resultview.component.sass']
 })
 
-export class ResultViewComponent implements OnDestroy, AfterViewInit {
+export class ResultViewComponent implements OnDestroy {
   data: any;
   options: any;
-  onIgnore = new EventEmitter();
   result;
-
-  // @Input() result: any;
-  // @Output() onIgnore = new EventEmitter();
 
   constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private resultStore: ResultStore) {
     console.log('Constructed');
@@ -49,52 +45,6 @@ export class ResultViewComponent implements OnDestroy, AfterViewInit {
       };
       this.cdr.detectChanges();
     });
-    // this.cdr.detectChanges();
-  }
-
-  // ngOnChanges() {
-  //   this.data = this.getData();
-  //   this.options = {
-  //     fill: false,
-  //     scales: {
-  //       xAxes: [
-  //         {display: false}
-  //       ]
-  //     },
-  //     tooltips: {
-  //       callbacks: {
-  //         label: (item, data) => {
-  //           console.log('item: ', item, data);
-  //           return item.yLabel.toFixed(2) + 's ' + moment(item.xLabel).fromNow();
-  //         }
-  //       }
-  //     },
-  //   };
-  // }
-
-  ngAfterViewInit() {
-    // this.route.paramMap.switchMap((params: ParamMap) =>
-    //   this.resultStore.getId(params.get('id'))
-    // ).subscribe((result) => {
-    //   this.result = result;
-    //   this.data = this.getData();
-    //   this.options = {
-    //     fill: false,
-    //     scales: {
-    //       xAxes: [
-    //         {display: false}
-    //       ]
-    //     },
-    //     tooltips: {
-    //       callbacks: {
-    //         label: (item, data) => {
-    //           console.log('item: ', item, data);
-    //           return item.yLabel.toFixed(2) + 's ' + moment(item.xLabel).fromNow();
-    //         }
-    //       }
-    //     },
-    //   };
-    // });
   }
 
   ngOnDestroy() {
@@ -112,13 +62,28 @@ export class ResultViewComponent implements OnDestroy, AfterViewInit {
   selectData(point) {
     const data = this.data.datasets[point.element._datasetIndex].data[point.element._index].id;
 
-    console.log('Point selected: ', point);
-    this.onIgnore.emit({result: this.result, data: data});
+    this.ignoreResultRun(data);
   }
 
-  ignoreResult(run) {
-    console.log('Ignoring result');
-    this.onIgnore.emit({result: this.result, data: run.id});
+  ignoreResult(data) {
+    console.log('Ignore result clicked: ', data);
+    this.ignoreResultRun(data.id);
+  }
+
+  ignoreResultRun(data) {
+    console.log('Ignore result');
+
+    const result = this.result;
+
+    const self = this;
+
+    self.resultStore.toggleIgnoreEntry(result, data).then(() => {
+      self.resultStore.getId(result.id).then((res) => {
+        self.result = res;
+        self.data = self.getData();
+        self.cdr.detectChanges();
+      });
+    });
   }
 
   getData() {

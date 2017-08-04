@@ -34,20 +34,20 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  ignoreResultRun(ignorePoint) {
-    console.log('Ignore result');
-    this.resultStore.toggleIgnoreEntry(ignorePoint.result, ignorePoint.data).then((value) => {
-      this.resultStore.get().then((results) => {
-        this.results = results;
-        this.cdr.detectChanges();
-
-        return q.when(this.results.filter((item) => {
-          return item.id === ignorePoint.result.id;
-        })[0]);
-      }).then((res) => {
-        this.result = res;
-        this.cdr.detectChanges();
-      });
-    });
-  }
+  // ignoreResultRun(ignorePoint) {
+  //   console.log('Ignore result');
+  //   this.resultStore.toggleIgnoreEntry(ignorePoint.result, ignorePoint.data).then((value) => {
+  //     this.resultStore.get().then((results) => {
+  //       this.results = results;
+  //       this.cdr.detectChanges();
+  //
+  //       return q.when(this.results.filter((item) => {
+  //         return item.id === ignorePoint.result.id;
+  //       })[0]);
+  //     }).then((res) => {
+  //       this.result = res;
+  //       this.cdr.detectChanges();
+  //     });
+  //   });
+  // }
 }
