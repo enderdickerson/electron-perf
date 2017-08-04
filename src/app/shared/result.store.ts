@@ -23,6 +23,20 @@ export class ResultStore {
     return deferred.promise;
   }
 
+  getId(id: string) {
+    const deferred = q.defer();
+
+    const Report = this.db.mongoose.model('Report');
+
+    const query = Report.findOne({_id: id});
+
+    query.exec((err, results) => {
+      deferred.resolve(results);
+    });
+
+    return deferred.promise;
+  }
+
   // Does not work with embedded document array see issue: https://github.com/Automattic/mongoose/issues/5480
   toggleIgnoreEntry(originalReport, run) {
     const deferred = q.defer();

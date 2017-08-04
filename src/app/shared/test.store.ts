@@ -25,7 +25,6 @@ export class TestStore {
     const query = Test.find({});
 
     return query.exec((err, tests) => {
-      console.log('tests retrieved: ', tests);
       return tests;
     });
   }

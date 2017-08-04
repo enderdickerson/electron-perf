@@ -26,8 +26,18 @@ export class TestListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.tests.subscribe((value) => {
-      console.log('TEST LIST: ', value);
-      this.testOptions = value;
+      this.testOptions = value.map((item) => {
+        const url = new URL(item.url);
+
+        return Object.assign(item, {
+          path: url.pathname,
+          queryString: url.searchParams,
+          hostname: url.hostname
+        });
+      }).sort((a, b) => {
+        return b.path > a.path ? -1 : b.path < a.path ? 1 : 0;
+      });
+
       this.selectedTests = [];
 
       if (this.searchVal) {
@@ -74,7 +84,6 @@ export class TestListComponent implements OnInit, OnDestroy {
 
   update() {
     this.cdr.detectChanges();
-    console.log('Selected from list: ', this.selectedTests);
     this.onSelectedTests.emit(this.selectedTests);
   }
 

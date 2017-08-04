@@ -14,6 +14,7 @@ import { ResultViewComponent } from './results/resultview/resultview.component';
 
 import { SharedModule } from '../shared/shared.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ResultHomeComponent} from "./results/resulthome/resulthome.component";
 
 @NgModule({
   imports: [
@@ -29,12 +30,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   exports: [
     ResultsComponent,
     ResultListComponent,
-    ResultViewComponent
+    ResultViewComponent,
+    ResultHomeComponent
   ],
   declarations: [
     ResultsComponent,
     ResultListComponent,
-    ResultViewComponent
+    ResultViewComponent,
+    ResultHomeComponent
   ],
   providers: [
   ],

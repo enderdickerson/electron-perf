@@ -2,23 +2,24 @@ import {Injectable} from '@angular/core';
 import { WindowService } from './window.service';
 import { Observable } from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 
 export class TestService {
   count: number;
   maxThreads: number;
-  pendingTests: boolean;
-  // pendingTests: Subject<boolean> = new Subject<boolean>();
+  // pendingTests: boolean;
+  pendingTests: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private winService: WindowService) {
     this.maxThreads = 4;
     this.count = 0;
-    this.pendingTests = false;
+    // this.pendingTests = false;
     // this.pendingTests.next(false);
   }
 
-  public getPendingTests() {
+  public getPendingTests(): Observable<boolean> {
     return this.pendingTests;
   }
 
@@ -66,8 +67,8 @@ export class TestService {
 
     const win = this.winService;
 
-    this.pendingTests = true;
-    console.log('Setting pending to true');
+    // this.pendingTests = true;
+    this.pendingTests.next(true);
 
     let count = this.count;
     let threads = this.maxThreads;
@@ -76,11 +77,11 @@ export class TestService {
       threads = test.length;
     }
 
-    new Notification('Speed test started', {
+    const noti = new Notification('Speed test started', {
       body: 'URL Perf is now testing'
     });
 
-    let self = this;
+    const self = this;
 
     groups.forEach(function(tests) {
       const fork = win.nativeWindow.child_process.fork('./src/background/runtest.js');
@@ -89,10 +90,9 @@ export class TestService {
         count++;
 
         if (count >= threads) {
-          self.pendingTests = false;
+          self.pendingTests.next(false);
 
           count = 0;
-          console.log('Setting pending to false');
           const finished = new Notification('Speed test finished', {
             body: 'URL Perf has new results available'
           });

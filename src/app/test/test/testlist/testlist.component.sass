@@ -9,12 +9,23 @@ $bright-blue: #0567D6
 .count
   color: rgba(0,0,0,0.32)
 
-.ui-widget.ui-button
-  &.btn-outline
-    border-color: rgba(0,0,0,0.25)
-    background: transparent
-    color: rgba(0,0,0,0.84)
-    padding: 8px 16px
+.list-checkbox
+  vertical-align: sub
+  ::ng-deep .ui-chkbox.ui-widget
+    vertical-align: inherit
+    margin-top: 8px
+
+.btn-outline
+  border-color: rgba(0,0,0,0.25)
+  background: transparent
+  color: rgba(0,0,0,0.84)
+  padding: 8px 16px
+  cursor: pointer
+  outline: none
+  width: 100%
+  display: inline-block
+  min-height: 20px
+  vertical-align: top
   &.as-sidenav
     padding: 8px
     text-align: left
@@ -26,6 +37,14 @@ $bright-blue: #0567D6
       background: rgba(0,0,0,0.05)
       color: inherit
       border: none
+
+.btn-label
+  display: inline-block
+  width: 100%
+
+.btn-sub
+  font-size: 12px
+  color: rgba(0,0,0,0.54)
 
 .list-content
   height: 400px

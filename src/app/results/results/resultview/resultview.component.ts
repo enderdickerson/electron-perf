@@ -1,4 +1,10 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectorRef, OnChanges, OnDestroy} from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter, ChangeDetectorRef, OnChanges, OnDestroy, OnInit,
+  AfterViewInit
+} from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ResultStore} from '../../../shared/result.store';
+import 'rxjs/add/operator/switchMap';
 
 const moment = window.require('moment');
 const colors = window.require('nice-color-palettes');
@@ -9,33 +15,86 @@ const colors = window.require('nice-color-palettes');
   styleUrls: ['resultview.component.sass']
 })
 
-export class ResultViewComponent implements OnChanges, OnDestroy {
+export class ResultViewComponent implements OnDestroy, AfterViewInit {
   data: any;
   options: any;
+  onIgnore = new EventEmitter();
+  result;
 
-  @Input() result: any;
-  @Output() onIgnore = new EventEmitter();
+  // @Input() result: any;
+  // @Output() onIgnore = new EventEmitter();
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  ngOnChanges() {
-    this.data = this.getData();
-    this.options = {
-      fill: false,
-      scales: {
-        xAxes: [
-          {display: false}
-        ]
-      },
-      tooltips: {
-        callbacks: {
-          label: (item, data) => {
-            console.log('item: ', item, data);
-            return item.yLabel.toFixed(2) + 's ' + moment(item.xLabel).fromNow();
+  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private resultStore: ResultStore) {
+    console.log('Constructed');
+    this.route.paramMap.switchMap((params: ParamMap) =>
+      this.resultStore.getId(params.get('id'))
+    ).subscribe((result) => {
+      this.result = result;
+      this.data = this.getData();
+      this.options = {
+        fill: false,
+        scales: {
+          xAxes: [
+            {display: false}
+          ]
+        },
+        tooltips: {
+          callbacks: {
+            label: (item, data) => {
+              console.log('item: ', item, data);
+              return item.yLabel.toFixed(2) + 's ' + moment(item.xLabel).fromNow();
+            }
           }
-        }
-      },
-    };
+        },
+      };
+      this.cdr.detectChanges();
+    });
+    // this.cdr.detectChanges();
+  }
+
+  // ngOnChanges() {
+  //   this.data = this.getData();
+  //   this.options = {
+  //     fill: false,
+  //     scales: {
+  //       xAxes: [
+  //         {display: false}
+  //       ]
+  //     },
+  //     tooltips: {
+  //       callbacks: {
+  //         label: (item, data) => {
+  //           console.log('item: ', item, data);
+  //           return item.yLabel.toFixed(2) + 's ' + moment(item.xLabel).fromNow();
+  //         }
+  //       }
+  //     },
+  //   };
+  // }
+
+  ngAfterViewInit() {
+    // this.route.paramMap.switchMap((params: ParamMap) =>
+    //   this.resultStore.getId(params.get('id'))
+    // ).subscribe((result) => {
+    //   this.result = result;
+    //   this.data = this.getData();
+    //   this.options = {
+    //     fill: false,
+    //     scales: {
+    //       xAxes: [
+    //         {display: false}
+    //       ]
+    //     },
+    //     tooltips: {
+    //       callbacks: {
+    //         label: (item, data) => {
+    //           console.log('item: ', item, data);
+    //           return item.yLabel.toFixed(2) + 's ' + moment(item.xLabel).fromNow();
+    //         }
+    //       }
+    //     },
+    //   };
+    // });
   }
 
   ngOnDestroy() {
@@ -59,7 +118,7 @@ export class ResultViewComponent implements OnChanges, OnDestroy {
 
   ignoreResult(run) {
     console.log('Ignoring result');
-    this.onIgnore.emit({result:this.result, data: run.id});
+    this.onIgnore.emit({result: this.result, data: run.id});
   }
 
   getData() {
@@ -109,26 +168,5 @@ export class ResultViewComponent implements OnChanges, OnDestroy {
     return {
       datasets: asScatterPoints
     };
-
-    // const times = this.result.results.map((item) => {
-    //   return item.endTime;
-    // });
-    //
-    // times.sort((a, b) => {
-    //   return b - a;
-    // });
-    //
-    // const labels = times.map((item) => {
-    //   return moment(item).format('HH:mm DD/MM');
-    // });
-    //
-    // // const data = {
-    // //   labels: labels,
-    // //   datasets: this.result.results
-    // // }
-    //
-    // moment(times[0]).week();
-    //
-    // console.log('earliestDate', earliestDate);
   }
 }

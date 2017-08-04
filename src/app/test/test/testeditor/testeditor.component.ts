@@ -24,7 +24,6 @@ export class TestEditorComponent implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: any) {
-    console.log('changes: ', changes);
     this.cdr.detectChanges();
   }
 

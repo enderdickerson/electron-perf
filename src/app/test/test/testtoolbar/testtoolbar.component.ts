@@ -36,13 +36,11 @@ export class TestToolbarComponent implements OnInit, OnDestroy {
 
     this.pending.subscribe((value) => {
       this.hasPendingTests = value;
-      console.log('value changed again: ', value);
       this.cdr.detectChanges();
     });
 
     this.environments.subscribe((value) => {
       this.envs = value;
-      console.log('Envs changed', value);
       this.cdr.detectChanges();
     });
   }

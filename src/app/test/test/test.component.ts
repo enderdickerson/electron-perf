@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { TestService } from '../../shared/test.service';
 import { TestStore } from '../../shared/test.store';
 import { Subject } from 'rxjs/Subject';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Component({
   selector: 'app-test',
@@ -13,18 +14,16 @@ export class TestComponent implements OnInit, OnDestroy {
   tests: any;
   selectedTest: any;
   selectedTests: string[] = [];
-  runningTests: Subject<boolean> = new Subject<boolean>();
+  runningTests: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   environments: Subject<any> = new Subject<any>();
   testList: Subject<any> = new Subject<any>();
+  testServiceSub;
 
   constructor(
     private testService: TestService,
     private testStore: TestStore,
     private cdr: ChangeDetectorRef
   ) {
-    // this.testService.getPendingTests().subscribe((value) => {
-    //   this.runningTests.next(value);
-    // });
     this.tests = [];
     this.testList.next([]);
   }
@@ -39,7 +38,9 @@ export class TestComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     });
 
-    this.runningTests.next(this.testService.getPendingTests());
+    this.testServiceSub = this.testService.getPendingTests().subscribe((value) => {
+      this.runningTests.next(value);
+    });
   }
 
   ngOnDestroy() {
@@ -47,6 +48,7 @@ export class TestComponent implements OnInit, OnDestroy {
     this.runningTests.unsubscribe();
     this.environments.unsubscribe();
     this.testList.unsubscribe();
+    this.testServiceSub.unsubscribe();
   }
 
   private getEnvs() {

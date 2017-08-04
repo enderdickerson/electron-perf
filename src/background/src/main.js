@@ -30,23 +30,10 @@ before(function(done) {
 
     let Test = mongoose.model('Test');
 
-    // Test.find({}).exec(function(err, tests) {
-    //   if (err) {
-    //     console.error(err);
-    //   }
-    //
-    //   console.log('Test suite:', tests);
-      // global.testSuite = tests || [];
-      // done();
-    // });
-
-    // global.testSuite = [
-    //   {
-    //     url: 'https://material.angularjs.org/latest/'
-    //   }
-    // ];
     done();
   });
+
+  browser.driver.manage().window().setPosition(-10000, 0);
 });
 
 after(function(done) {

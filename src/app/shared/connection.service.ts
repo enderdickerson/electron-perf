@@ -42,14 +42,15 @@ export class ConnectionService {
     const appPath = remote.app.getAppPath();
     const config = remote.require(path.join(appPath, 'config'));
 
-    this.mongoose.connect(config.connectionString, config.options);
+    const merged = Object.assign(config.options, {promiseLibrary: global.Promise});
+
+    this.mongoose.connect(config.connectionString, merged);
 
     this.db = this.mongoose.connection;
 
     this.db.on('error', console.error.bind(console, 'connection error:'));
 
     this.db.once('open', () => {
-      console.log('Database connected');
     });
   }
 }

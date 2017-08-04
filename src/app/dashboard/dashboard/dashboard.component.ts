@@ -2,6 +2,7 @@ import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import { ResultStore } from '../../shared/result.store';
 import {TestStore} from '../../shared/test.store';
 import {Subject} from 'rxjs/Subject';
+import {Router} from "@angular/router";
 const moment = window.require('moment');
 const colors = window.require('nice-color-palettes');
 
@@ -17,12 +18,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   results: [any];
   chart: any;
   testCount: any;
+  chartIdMapping: any = {};
 
   chartType: Subject<string> = new Subject<string>();
   chartTitle: Subject<string> = new Subject<string>();
 
   constructor(private resultStore: ResultStore,
               private testStore: TestStore,
+              private router: Router,
               private cdr: ChangeDetectorRef) {}
 
   ngOnDestroy() {
@@ -78,6 +81,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
+  onChartClick(model) {
+    const id = this.chartIdMapping[model.datasetLabel + '/' + model.label];
+    console.log('ID of report clicked: ', id);
+    this.router.navigate(['results', id]);
+  }
+
   private getEnvironmentTiming() {
     // const timings = this.results.map((item) => {
     //   return item.results.map((result) => {
@@ -120,6 +129,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     const colorSet = colors[0].concat(colors[1]).concat(colors[2]);
 
+    const self = this;
+
     const dataSets = environments.map((item, envIndex) => {
       return {
         label: item,
@@ -149,6 +160,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
             } else {
               arr[index] = 0;
             }
+
+            self.chartIdMapping[item + '/' + reportNames[index]] = report.id;
 
             return arr;
           }, Array(reportNames.length).fill(0))
