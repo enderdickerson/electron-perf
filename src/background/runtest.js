@@ -40,7 +40,7 @@ function startEndToEndTests() {
 
   // const unpackedProtractor = path.join(__dirname, '..', '..', '..', 'unpacked', 'protractor', 'bin', 'protractor');
 
-  const confPath = path.join('src', 'background', 'src', 'protractorconf.js');
+  const confPath = path.join(__dirname, 'src', 'protractorconf.js');
 
   runCmdExec('node ' + protractorPath + ' ' + confPath, deferred);
 
@@ -79,7 +79,7 @@ function setUpWebDriver() {
   const webdriverPath = path.join(__dirname, '..', '..', 'node_modules', 'webdriver-manager', 'bin',
     'webdriver-manager');
 
-  const unpackedWebdriver = path.join(__dirname, '..', '..', '..', 'unpacked', 'webdriver-manager', 'bin', 'webdriver-manager');
+  // const unpackedWebdriver = path.join(__dirname, '..', '..', '..', 'unpacked', 'webdriver-manager', 'bin', 'webdriver-manager');
 
   runCmdExec('node ' + webdriverPath + ' update --ignore_ssl ' + (config.proxy ? ('--proxy ' + config.proxy) : '') + ' --gecko false', deferred);
 

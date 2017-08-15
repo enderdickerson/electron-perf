@@ -83,85 +83,43 @@ export class TestService {
 
     const self = this;
 
-    // const path = window.require('path');
+    const log = window.require('electron-log');
+
+    win.nativeWindow.logger.error('Starting tests');
 
     const remote = window.require('electron').remote;
 
     const appPath = remote.app.getAppPath();
 
-    console.log('Current Dir: ', appPath);
-
-    const log = window.require('electron-log');
-
-    win.nativeWindow.logger.error('Starting tests');
-
     groups.forEach(function(tests) {
-      console.log('Current Dir: ', appPath);
-
-      console.log('DIR for background: ', win.nativeWindow.path.join(appPath, 'src/background/runtest.js'));
+      console.error('DIR for background: ', win.nativeWindow.path.join(appPath, 'src/background/runtest.js'));
 
       const fork = win.nativeWindow.child_process.fork(win.nativeWindow.path.join(appPath, 'src/background/runtest.js'),
-        [], {stdio: ['pipe', 'pipe', 'pipe', 'ipc'], env: {ATOM_SHELL_INTERNAL_RUN_AS_NODE : 0}});
+        [], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
 
-      fork.stderr.on('data', (err, bar, baz) => {
+      fork.stderr.on('data', (err) => {
         win.nativeWindow.logger.error('Error: ' + err);
       });
 
       fork.on('message', (result) => {
-        // if (result.msgtype === 'command' && result.content === 'updateWebDriver') {
-        //   console.error('Update webdriver');
-        //   self.updateWebDriver();
-        //   fork.send({msgtype: 'command', content: 'updateWebDriverFinished'});
-        // } else if (result.msgtype === 'command' && result.content === 'startProtractor') {
-        //   console.error('Start protractor');
-        //   fork.send({msgtype: 'command', content: 'protractorFinished'});
-        // } else {
-          count++;
+        count++;
 
-          if (count >= threads) {
-            self.pendingTests.next(false);
+        if (count >= threads) {
+          self.pendingTests.next(false);
 
-            count = 0;
-            const finished = new Notification('Speed test finished', {
-              body: 'URL Perf has new results available'
-            });
+          count = 0;
+          const finished = new Notification('Speed test finished', {
+            body: 'URL Perf has new results available'
+          });
 
-            finished.onclick = () => {
-              console.log('Notification clicked');
-            };
-          }
-        // }
+          finished.onclick = () => {
+            console.log('Notification clicked');
+          };
+        }
       });
 
       fork.send({msgtype: 'dependencies', content: tests});
       fork.send({msgtype: 'command', content: 'begin'});
     });
-  }
-
-  updateWebDriver() {
-    const win = this.winService;
-
-    const remote = window.require('electron').remote;
-
-    const appPath = remote.app.getAppPath();
-
-    // if (config.proxy) {
-    //   console.error('using proxy: ' + config.proxy);
-    // }
-    //
-
-    // const webDriverPath = win.nativeWindow.path.join(appPath, 'node_modules', 'webdriver-manager', 'bin', 'webdriver-manager');
-
-    // runCmdExec('node ' + webdriverPath + ' update --ignore_ssl ' + (config.proxy ? ('--proxy ' + config.proxy) : '') + ' --gecko false', deferred);
-
-    // win.nativeWindow.child_process.fork('node', [''])
-  }
-
-  startProtractor() {
-    // const protractorPath = win.nativeWindow.path.join(appPath, 'node_modules', 'protractor', 'bin', 'protractor');
-    //
-    // const confPath = win.nativeWindow.path.join(appPath, 'src', 'background', 'src', 'protractorconf.js');
-    //
-    // runCmdExec('node ' + protractorPath + ' ' + confPath, deferred);
   }
 }
