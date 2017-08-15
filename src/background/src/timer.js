@@ -1,6 +1,8 @@
 let reporter = require('./reporter');
 let NanoTimer = require('nanotimer');
-let q = require('Q');
+let q = require('q');
+// const log = require('electron-log');
+// console.log = log.info;
 
 module.exports.getTimed = getTimed;
 

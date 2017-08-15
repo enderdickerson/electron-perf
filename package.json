@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "./node_modules/.bin/electron ."
+    "electron": "./node_modules/.bin/electron .",
+    "package": "rimraf app.asar && npm run build && asar pack . app.asar"
   },
   "config": {
     "baseurl": "./"
@@ -38,6 +39,7 @@
     "core-js": "^2.4.1",
     "dotenv": "^4.0.0",
     "electron": "^1.6.11",
+    "electron-log": "^2.2.7",
     "electron-reload": "^1.2.1",
     "font-awesome": "^4.7.0",
     "mocha": "^3.4.2",

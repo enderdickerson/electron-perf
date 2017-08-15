@@ -4,6 +4,9 @@ const url = require('url');
 let args = require('yargs');
 const config = require(path.join(__dirname, 'config'));
 
+const logger = require('electron-log');
+
+
 require('dotenv').config();
 
 // require('electron-reload')(__dirname);
@@ -11,6 +14,9 @@ require('dotenv').config();
 let win = null;
 
 app.on('ready', () => {
+  logger.transports.console.level = 'verbose';
+  logger.transports.rendererConsole.level = 'debug';
+
   win = new BrowserWindow({width: 1200, height: 800, frame: false});
 
   // if (process.env.PACKAGE === 'true') {
