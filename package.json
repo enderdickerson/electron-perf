@@ -1,8 +1,11 @@
 {
   "name": "electron-perf",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "license": "UNLICENSED",
   "main": "main.js",
+  "productName": "UrlPerf",
+  "author": "Andrew Dickerson",
+  "description": "Url Performance tracking for SPAs",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +14,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "./node_modules/.bin/electron .",
-    "package": "rimraf app.asar && npm run build && asar pack . app.asar"
+    "package": "./node_modules/.bin/electron-packager . --out=builds --ignore='^/builds$' --platform=win32 --arch=x64 --prune=false --overwrite=true"
   },
   "config": {
     "baseurl": "./"
@@ -65,6 +68,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "~3.0.1",
+    "electron-packager": "^8.7.2",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
