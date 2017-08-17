@@ -1,11 +1,24 @@
-const {app, BrowserWindow } = require('electron');
+const {app, BrowserWindow, remote } = require('electron');
 const path = require('path');
 const url = require('url');
 let args = require('yargs');
 const config = require(path.join(__dirname, 'config'));
+const autoUpdater = remote.autoUpdater;
 
 const logger = require('electron-log');
 
+const updateFeed = 'https://urlperfreleaser.herokuapp.com/download';
+
+autoUpdater.setFeedUrl(updateFeed);
+
+if (require('electron-squirrel-startup')) {
+  return;
+}
+
+// if (autoUpdater.checkForUpdates()) {
+//   autoUpdater.quitAndInstall();
+//   return;
+// }
 
 require('dotenv').config();
 
