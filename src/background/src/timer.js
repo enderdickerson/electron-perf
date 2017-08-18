@@ -32,7 +32,7 @@ function getTimed(arr, deferred, repeat) {
     //   return q.when();
     // }).then(function() {
     //
-      console.error('Log: ', browserLog);
+    //   console.error('Log: ', browserLog);
 
       return reporter.log(elapsed, arr.url).then(function() {
         repeat = repeat || 1;
