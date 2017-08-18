@@ -1,8 +1,11 @@
 {
-  "name": "electron-perf",
-  "version": "0.1.0",
+  "name": "urlperf",
+  "version": "1.0.1",
   "license": "UNLICENSED",
   "main": "main.js",
+  "productName": "UrlPerf",
+  "author": "Andrew Dickerson",
+  "description": "Url Performance tracking for SPAs",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +13,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "./node_modules/.bin/electron ."
+    "electron": "./node_modules/.bin/electron .",
+    "package": "./node_modules/.bin/electron-packager . --out=builds --ignore='^/builds$' --platform=win32 --arch=x64 --prune=false --overwrite=true",
+    "make": "node installer.js"
   },
   "config": {
     "baseurl": "./"
@@ -38,7 +43,9 @@
     "core-js": "^2.4.1",
     "dotenv": "^4.0.0",
     "electron": "^1.6.11",
+    "electron-log": "^2.2.7",
     "electron-reload": "^1.2.1",
+    "electron-squirrel-startup": "^1.0.0",
     "font-awesome": "^4.7.0",
     "mocha": "^3.4.2",
     "moment": "^2.18.1",
@@ -63,6 +70,8 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "~3.0.1",
+    "electron-packager": "^8.7.2",
+    "electron-winstaller": "^2.6.3",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",

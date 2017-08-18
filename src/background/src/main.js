@@ -1,6 +1,11 @@
+
+console.error('Made it here');
 let chai = require('chai');
 let chaiAsPromised = require('chai-as-promised');
 let mongoose = require('mongoose');
+// const log = require('electron-log');
+
+console.error('Made it here');
 
 require('../../app/models/reportmodel');
 require('../../app/models/testmodel');
@@ -18,6 +23,7 @@ let mongodbUri = config.connectionString;
 let mongodbOptions = config.options;
 
 before(function(done) {
+  console.error('Made it here');
   mongoose.connect(mongodbUri, mongodbOptions);
   conn = mongoose.connection;
 

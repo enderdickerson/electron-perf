@@ -1,5 +1,7 @@
 let mongoose = require('mongoose');
 const Result = require('../../app/models/resultmodel');
+// const log = require('electron-log');
+// console.log = log.info;
 
 let os = require('os');
 let URL = require('url').URL;
@@ -15,7 +17,7 @@ module.exports.log = function(time, url) {
 
   return query.exec(function(err, report) {
     if (err) {
-      console.log('error: ', err);
+      console.error('error: ', err);
       return;
     }
 
@@ -36,7 +38,7 @@ module.exports.log = function(time, url) {
 
     report.save(function(err) {
       if (err) {
-        console.log('error: ', err);
+        console.error('error: ', err);
       }
     });
   });

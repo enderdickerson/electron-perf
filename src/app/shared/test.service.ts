@@ -83,8 +83,23 @@ export class TestService {
 
     const self = this;
 
+    const log = window.require('electron-log');
+
+    win.nativeWindow.logger.error('Starting tests');
+
+    const remote = window.require('electron').remote;
+
+    const appPath = remote.app.getAppPath();
+
     groups.forEach(function(tests) {
-      const fork = win.nativeWindow.child_process.fork('./src/background/runtest.js');
+      console.error('DIR for background: ', win.nativeWindow.path.join(appPath, 'src/background/runtest.js'));
+
+      const fork = win.nativeWindow.child_process.fork(win.nativeWindow.path.join(appPath, 'src/background/runtest.js'),
+        [], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
+
+      fork.stderr.on('data', (err) => {
+        win.nativeWindow.logger.error('Error: ' + err);
+      });
 
       fork.on('message', (result) => {
         count++;

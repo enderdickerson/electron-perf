@@ -1,22 +1,24 @@
 let child_process = require('child_process');
-let q = require('Q');
+let q = require('q');
 let config = require('../../config');
 const path = require('path');
 
+// const logger = require('electron-log');
+
 process.on('message', function(input) {
   if (input.msgtype === 'dependencies') {
-    console.log('dependencies: ', input.content);
+    console.error('dependencies: ', input.content);
     process.env.TESTS = JSON.stringify(input.content);
   }
 
   if (input.msgtype === 'command') {
     if (input.content === 'begin') {
-      console.log('begin');
+      console.error('begin');
       output = startApp();
     }
 
     if (input.content === 'halt') {
-      console.log('end');
+      console.error('end');
       process.exit();
     }
   }
@@ -34,11 +36,15 @@ function startApp() {
 function startEndToEndTests() {
   let deferred = q.defer();
 
-  const protractorPath = path.join('node_modules', 'protractor', 'bin', 'protractor');
+  const protractorPath = path.join(__dirname, '..', '..', 'node_modules', 'protractor', 'bin', 'protractor');
 
-  const confPath = path.join('src', 'background', 'src', 'protractorconf.js');
+  // const unpackedProtractor = path.join(__dirname, '..', '..', '..', 'unpacked', 'protractor', 'bin', 'protractor');
+
+  const confPath = path.join(__dirname, 'src', 'protractorconf.js');
 
   runCmdExec('node ' + protractorPath + ' ' + confPath, deferred);
+
+  // return q.when();
 
   return deferred.promise;
 }
@@ -46,13 +52,15 @@ function startEndToEndTests() {
 function runCmdExec(command, promise) {
   let options = {env: process.env, stdio: 'inherit'};
 
+  console.error('Command: ', command);
+
   child_process.exec(command, options, function(code, stdout, stderr) {
     if(stderr) {
-      console.log('stderr:', stderr);
+      console.error('stderr:', stderr);
     }
 
     if(stdout) {
-      console.log('stdout:', stdout);
+      console.error('stdout:', stdout);
     }
 
     promise.resolve(code);
@@ -62,14 +70,16 @@ function runCmdExec(command, promise) {
 function setUpWebDriver() {
   let deferred = q.defer();
 
-  console.log('getting update');
+  console.error('getting update');
 
   if (config.proxy) {
-    console.log('using proxy: ' + config.proxy);
+    console.error('using proxy: ' + config.proxy);
   }
 
-  const webdriverPath = path.join('node_modules', 'webdriver-manager', 'bin',
+  const webdriverPath = path.join(__dirname, '..', '..', 'node_modules', 'webdriver-manager', 'bin',
     'webdriver-manager');
+
+  // const unpackedWebdriver = path.join(__dirname, '..', '..', '..', 'unpacked', 'webdriver-manager', 'bin', 'webdriver-manager');
 
   runCmdExec('node ' + webdriverPath + ' update --ignore_ssl ' + (config.proxy ? ('--proxy ' + config.proxy) : '') + ' --gecko false', deferred);
 
