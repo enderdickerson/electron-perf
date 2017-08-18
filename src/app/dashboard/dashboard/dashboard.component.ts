@@ -137,8 +137,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         backgroundColor: colorSet[envIndex],
         data: this.results
           .reduce((arr, report, index) => {
-            const relevant = report.results.filter((result) => {
+            let relevant = report.results.filter((result) => {
               return result.host === item;
+            });
+
+            relevant = relevant.filter(function(testResult) {
+              return testResult.ignore !== true;
             });
 
             relevant.sort((a, b) => {

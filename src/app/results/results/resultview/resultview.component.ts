@@ -18,14 +18,30 @@ const colors = window.require('nice-color-palettes');
 export class ResultViewComponent implements OnDestroy {
   data: any;
   options: any;
-  result;
+  result : any;
 
   constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private resultStore: ResultStore) {
     console.log('Constructed');
+    var self = this;
     this.route.paramMap.switchMap((params: ParamMap) =>
       this.resultStore.getId(params.get('id'))
     ).subscribe((result) => {
-      this.result = result;
+      self.result = result;
+
+      this.cdr.detectChanges();
+
+      self.result.results.sort((a, b) => {
+        if (a.endTime > b.endTime) {
+          return -1;
+        }
+
+        if (a.endTime < b.endTime) {
+          return 1;
+        }
+
+        return 0;
+      });
+
       this.data = this.getData();
       this.options = {
         fill: false,
@@ -49,6 +65,10 @@ export class ResultViewComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.cdr.detach();
+  }
+
+  open(run) {
+    console.log('Run: ', run);
   }
 
   asTime(runTime) {
@@ -80,6 +100,19 @@ export class ResultViewComponent implements OnDestroy {
     self.resultStore.toggleIgnoreEntry(result, data).then(() => {
       self.resultStore.getId(result.id).then((res) => {
         self.result = res;
+
+        self.result.results.sort((a, b) => {
+          if (a.endTime > b.endTime) {
+            return -1;
+          }
+
+          if (a.endTime < b.endTime) {
+            return 1;
+          }
+
+          return 0;
+        });
+
         self.data = self.getData();
         self.cdr.detectChanges();
       });

@@ -6,8 +6,11 @@
         <p-chart type="scatter" [data]="data" (onDataSelect)="selectData($event)" [options]="options"></p-chart>
         <p class="subtitle-1">Results</p>
         <div class="scroll-box">
-          <div class="btn-outline" *ngFor="let run of result.results" (click)="ignoreResult(run)" [class.ignored]="run.ignore">
-            <span class="elapsed-time">{{run.elapsed | number}}</span> {{run.host}} <span class="timestamp" title="{{asTime(run.endTime)}}">{{fromTime(run.endTime)}}</span>
+          <div class="btn-outline" *ngFor="let run of result.results" [class.ignored]="run.ignore">
+            <span class="elapsed-time">{{run.elapsed | number}}</span> {{run.host}}
+            <span class="btn btn-icon secondary-action" (click)="ignoreResult(run)"><i class="material-icons">visibility</i></span>
+            <span class="btn btn-icon secondary-action" (click)="open(run)"><i class="material-icons">open_in_new</i></span>
+            <span class="timestamp" title="{{asTime(run.endTime)}}">{{fromTime(run.endTime)}}</span>
           </div>
         </div>
       </div>
