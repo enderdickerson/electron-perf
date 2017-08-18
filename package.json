@@ -14,7 +14,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "./node_modules/.bin/electron .",
-    "package": "./node_modules/.bin/electron-packager . --out=builds --ignore='^/builds$' --platform=win32 --arch=x64 --prune=false --overwrite=true"
+    "package": "./node_modules/.bin/electron-packager . --out=builds --ignore='^/builds$' --platform=win32 --arch=x64 --prune=false --overwrite=true",
+    "make": "node installer.js"
   },
   "config": {
     "baseurl": "./"
