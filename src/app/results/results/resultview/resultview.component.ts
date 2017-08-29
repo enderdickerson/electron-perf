@@ -9,6 +9,8 @@ import 'rxjs/add/operator/switchMap';
 const moment = window.require('moment');
 const colors = window.require('nice-color-palettes');
 
+const {shell} = window.require('electron');
+
 @Component({
   selector: 'app-result-view',
   templateUrl: './resultview.component.html',
@@ -73,11 +75,19 @@ export class ResultViewComponent implements OnDestroy {
 
     let url = run.host + '/' + this.result.name;
 
+    if (run.host.indexOf('localhost') > -1) {
+      url = 'http://' + url;
+    } else {
+      url = 'https://' + url;
+    }
+
     if (run.queryString) {
       url = url + '?' + run.queryString;
     }
 
     console.log('Open: ', url);
+
+    shell.openExternal(url);
   }
 
   asTime(runTime) {
