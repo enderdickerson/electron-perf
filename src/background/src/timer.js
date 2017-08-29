@@ -9,6 +9,10 @@ module.exports.getTimed = getTimed;
 function getTimed(arr, deferred, repeat) {
   deferred = deferred || q.defer();
 
+  if (arr.isAngular === false) {
+    browser.waitForAngularEnabled(false)
+  }
+
   browser.get(arr.url);
 
   let timed = new NanoTimer();

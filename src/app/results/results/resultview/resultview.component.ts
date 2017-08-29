@@ -18,11 +18,11 @@ const colors = window.require('nice-color-palettes');
 export class ResultViewComponent implements OnDestroy {
   data: any;
   options: any;
-  result : any;
+  result: any;
 
   constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private resultStore: ResultStore) {
     console.log('Constructed');
-    var self = this;
+    const self = this;
     this.route.paramMap.switchMap((params: ParamMap) =>
       this.resultStore.getId(params.get('id'))
     ).subscribe((result) => {
@@ -69,6 +69,15 @@ export class ResultViewComponent implements OnDestroy {
 
   open(run) {
     console.log('Run: ', run);
+    console.log('Name: ', this.result);
+
+    let url = run.host + '/' + this.result.name;
+
+    if (run.queryString) {
+      url = url + '?' + run.queryString;
+    }
+
+    console.log('Open: ', url);
   }
 
   asTime(runTime) {
